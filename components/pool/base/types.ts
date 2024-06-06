@@ -1,6 +1,5 @@
 import { web3 } from '@project-serum/anchor';
-
-// import { RawMint } from "@solana/spl-token"
+import { RawMint } from '@solana/spl-token-4';
 
 export type BaseRayInput = {
     rpcEndpointUrl: string
@@ -11,6 +10,6 @@ export type Result<T, E = any> = {
 }
 export type MPLTokenInfo = {
     address: web3.PublicKey
-    // mintInfo: RawMint,
+    mintInfo: RawMint,
     metadata: any
 }

@@ -50,7 +50,8 @@ export async function createLookupTable(connection: web3.Connection, signer: web
     const txSignature = await connection.sendTransaction(transaction, [signer]);
     return { Ok: { txSignature, lookupTable: lookupTableAddress.toBase58() } }
   } catch (err) {
-    err = err ?? ""
+    // err = err ?? ""
+    err ?? ""
     return { Err: (err as any).toString() }
   }
 }

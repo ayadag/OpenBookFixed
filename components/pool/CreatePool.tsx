@@ -22,20 +22,13 @@ import {
 import { CreatePoolInput } from './types';
 import {
   getKeypairFromEnv,
+  getPubkeyFromStr,
   sleep,
 } from './utils';
 
 // import { bull_dozer } from "./jito_bundle/send-bundle";
 const log = console.log;
 
-
-
-type CreatePoolInput = {
-    marketId: web3.PublicKey,
-    baseMintAmount: number,
-    quoteMintAmount: number,
-    url: 'mainnet' | 'devnet',
-}
 
 export const CreatePool: FC = () => {
 
@@ -99,8 +92,54 @@ export const CreatePool: FC = () => {
             }
         }
     }
+
+    async function Pool() {
+        const marketIdS = "fejicf"
+        const id = getPubkeyFromStr(marketIdS)
+        if (!id) {
+            log("Invalid market id")
+            return
+        }
+        const marketId = id
+        const baseAmount = 8842
+        const quoteAmount = 9842
+        const url = 'devnet'
+
+        // if(marketId) {
+        const res = await createPool({
+            marketId,
+            baseMintAmount: baseAmount,
+            quoteMintAmount: quoteAmount,
+            url
+        }).catch(error => {
+            console.log({
+                createPoolError: error
+            });
+            return null
+        });
+        if (!res) return log("failed to create pool")
+        if (res.Err) return log({
+            error: res.Err
+        })
+        if (!res.Ok) return log("failed to create pool")
+        const {
+            poolId,
+            txSignature
+        } = res.Ok
+        log("Pool creation transaction successfully:")
+        log("transaction signature: ", txSignature)
+        log("pool address: ", poolId)
+        // } else {return null}
+    }
     
     return(
-        <div>Create Pool</div>
+        <>
+            <div>Create Pool</div>
+            <button
+        className="px-8 m-2 btn animate-pulse bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ..."
+        onClick={() => Pool}>
+          <span>Create Pool</span>
+      </button>
+        </>
     )
 }
