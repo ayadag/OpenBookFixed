@@ -10,9 +10,9 @@
 //   createMintToInstruction,
 //   createSetAuthorityInstruction,
 //   createTransferInstruction,
-// //   getAssociatedTokenAddressSync,
+//   getAssociatedTokenAddressSync,
 //   getMint
-// } from "@solana/spl-token-3";
+// } from "@solana/spl-token-4";
 // import { calcDecimalValue, calcNonDecimalValue, sleep } from "./utils";
 
 // const log = console.log;
