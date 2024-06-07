@@ -30,7 +30,8 @@ export const rpc_https_url = "http://mainnet.helius-rpc.com/?api-key=aaaaaaaaaaa
 export const market_id = new PublicKey("aaaaaaaaaaaaaaaaaaag6snCe2iUR3A");
 export const input_baseMint_tokens_percentage = 1; //ABC-Mint amount of tokens you want to add in Lp e.g. 1% = 100%. 0.9= 90%
 export const delay_pool_open_time = Number(0); //dont change it because then you wont be able to perform swap in bundle.
-export let quote_Mint_amount =  0.5; //COIN-SOL, amount of SOL u want to add to Pool amount
+// export let quote_Mint_amount =  0.5; //COIN-SOL, amount of SOL u want to add to Pool amount
+export const quote_Mint_amount =  0.5; //COIN-SOL, amount of SOL u want to add to Pool amount
 
 // remove lp:
 export const LP_remove_tokens_percentage = 1; //ABC-Mint amount of tokens in Lp that you want to remove e.g. 1% = 100%. 0.9= 90%

@@ -56,7 +56,7 @@ export function getSlippage(value?: number) {
 }
 
 export function getKeypairFromEnv() {
-  const keypairStr = process.env.KEYPAIR ?? ""
+  const keypairStr = process.env.NEXT_PUBLIC_KEYPAIR ?? ""
   try {
     const keypair = getKeypairFromStr(keypairStr)
     if (!keypair) throw "keypair not found"

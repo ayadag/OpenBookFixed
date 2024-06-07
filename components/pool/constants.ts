@@ -21,7 +21,8 @@ function getKeypairFromStr(str: string): web3.Keypair | null {
 export const RPC_ENDPOINT_MAIN = "https://indulgent-wandering-wave.solana-mainnet.quiknode.pro/a2bbf908f0bef4ff590544046ccc4f1b711b6d32/"
 // export const RPC_ENDPOINT_DEV = "https://white-proportionate-putty.solana-devnet.quiknode.pro/11132715a936f8adb03c940c627d6c0b9369d9e6/"
 
-export const RPC_ENDPOINT_DEV = "https://api.devnet.solana.com/"
+// export const RPC_ENDPOINT_DEV = "https://api.devnet.solana.com/"
+export const RPC_ENDPOINT_DEV = "https://api.devnet.solana.com"
 
 
 
@@ -30,13 +31,13 @@ export const makeTxVersion = TxVersion.V0 // LEGACY
 // export const RPC_ENDPOINT_MAIN = "http://127.0.0.1:8899"
 // export const RPC_ENDPOINT_DEV = "http://127.0.0.1:8899"
 
-const PINATA_API_kEY = process.env.PINATA_API_KEY!
-const PINATA_DOMAIN = process.env.PINATA_DOMAIN!
-const PINATA_API_SECRET_KEY = process.env.PINATA_API_SECRET_KEY!
-const IN_PRODUCTION = process.env.PRODUCTION == '1' ? true : false
+const PINATA_API_kEY = process.env.NEXT_PUBLIC_PINATA_API_KEY!
+const PINATA_DOMAIN = process.env.NEXT_PUBLIC_PINATA_DOMAIN!
+const PINATA_API_SECRET_KEY = process.env.NEXT_PUBLIC_PINATA_API_SECRET_KEY!
+const IN_PRODUCTION = process.env.NEXT_PUBLIC_PRODUCTION == '1' ? true : false
 const COMPUTE_UNIT_PRICE = 1_800_000 // default: 200_000
-const JITO_AUTH_KEYPAIR = getKeypairFromStr(process.env.JITO_AUTH_KEYPAIR!)!
-const JITO_BLOCK_ENGINE_URL = process.env.JITO_BLOCK_ENGINE_URL!
+const JITO_AUTH_KEYPAIR = getKeypairFromStr(process.env.NEXT_PUBLIC_JITO_AUTH_KEYPAIR!)!
+const JITO_BLOCK_ENGINE_URL = process.env.NEXT_PUBLIC_JITO_BLOCK_ENGINE_URL!
 if (!JITO_AUTH_KEYPAIR || !JITO_BLOCK_ENGINE_URL) {
     throw "Some ENV values not found"
 }

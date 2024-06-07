@@ -11,7 +11,7 @@ import fs from 'fs';
 
 import { web3 } from '@project-serum/anchor';
 
-import { BaseRay } from './base/baseRay';
+import { BaseRay } from './base/baseRay2';
 // import { BaseMpl } from "./base/baseMpl";
 import { Result } from './base/types';
 import {
@@ -21,7 +21,7 @@ import {
 } from './constants';
 import { CreatePoolInput } from './types';
 import {
-  getKeypairFromEnv,
+  getKeypairFromStr,
   getPubkeyFromStr,
   sleep,
 } from './utils';
@@ -36,7 +36,12 @@ export const CreatePool: FC = () => {
         // let { baseMintAmount, quoteMintAmount, marketId } = input
         const { baseMintAmount, quoteMintAmount, marketId } = input
 
-        const keypair = getKeypairFromEnv();
+        ////////ayad/////////
+        // const keypair = getKeypairFromEnv();
+        const keypair = getKeypairFromStr("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT");
+        if(!keypair){
+            return { Err: "keypair not found" }
+        }
         const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
         const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
         const marketState = await baseRay.getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
@@ -49,6 +54,8 @@ export const CreatePool: FC = () => {
             baseToken: baseMint.toBase58(),
             quoteToken: quoteMint.toBase58(),
         })
+
+        
         const txInfo = await baseRay.createPool({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
         if (!txInfo) return { Err: "Failed to prepare create pool transaction" }
         // speedup
@@ -94,15 +101,23 @@ export const CreatePool: FC = () => {
     }
 
     async function Pool() {
-        const marketIdS = "fejicf"
+        log(process.env.NEXT_PUBLIC_KEYPAIR)
+        /*
+        SALD : Duqm5K5U1H8KfsSqwyWwWNWY5TLB9WseqNEAQMhS78hb
+        WSOL : So11111111111111111111111111111111111111112
+        OpenMarket ID : BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG
+        AMM ID: 2viGyp1hY8PGw7GEPzJvLdPAQpe7zL745oHp1C6a3jcJ
+        https://openbookfixed.onrender.com/market/BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG?network=devnet&address=HLwPARhaNdaehQpkijmir6ZStHGmhHqqkrQjcdbYNyEN
+        */
+        const marketIdS = "BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG"
         const id = getPubkeyFromStr(marketIdS)
         if (!id) {
             log("Invalid market id")
             return
         }
         const marketId = id
-        const baseAmount = 8842
-        const quoteAmount = 9842
+        const baseAmount = 2
+        const quoteAmount = 2
         const url = 'devnet'
 
         // if(marketId) {
@@ -137,7 +152,7 @@ export const CreatePool: FC = () => {
             <div>Create Pool</div>
             <button
         className="px-8 m-2 btn animate-pulse bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ..."
-        onClick={() => Pool}>
+        onClick={() => Pool()}>
           <span>Create Pool</span>
       </button>
         </>
