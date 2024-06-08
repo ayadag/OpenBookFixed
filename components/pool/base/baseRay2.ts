@@ -458,8 +458,8 @@ export class BaseRay {
     const userQuoteAta = getAssociatedTokenAddressSync(input.quoteMint, user)
 
     // let [baseMintAccountInfo, quoteMintAccountInfo, marketAccountInfo, userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId, userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
-    let [userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId, userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
-    const [baseMintAccountInfo, quoteMintAccountInfo, marketAccountInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId, userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
+    let [userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
+    const [baseMintAccountInfo, quoteMintAccountInfo, marketAccountInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId]).catch(() => [null, null, null, null])
 
     if (!baseMintAccountInfo || !quoteMintAccountInfo || !marketAccountInfo) throw "AccountInfo not found"
     if (input.baseMint.toBase58() != NATIVE_MINT.toBase58() && !userBaseAtaInfo) throw "Don't have enought tokens"
