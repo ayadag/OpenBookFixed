@@ -109,7 +109,7 @@ export const CreatePool: FC = () => {
         AMM ID: 2viGyp1hY8PGw7GEPzJvLdPAQpe7zL745oHp1C6a3jcJ
         https://openbookfixed.onrender.com/market/BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG?network=devnet&address=HLwPARhaNdaehQpkijmir6ZStHGmhHqqkrQjcdbYNyEN
         */
-        const marketIdS = "BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG"
+        const marketIdS = "9xDZVHxgkjDCatnTQaGrCah9tB33AvzfeCBSxtUuem7L"
         const id = getPubkeyFromStr(marketIdS)
         if (!id) {
             log("Invalid market id")
