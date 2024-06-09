@@ -29,10 +29,16 @@ import {
 // import fs from 'fs';
 import {
   getAssociatedTokenAddressSync,
+  // MintLayout,
+  // NATIVE_MINT,
+  // TOKEN_PROGRAM_ID,
+} from '@solana/spl-token-3';
+import {
+  // getAssociatedTokenAddressSync,
   MintLayout,
   NATIVE_MINT,
   TOKEN_PROGRAM_ID,
-} from '@solana/spl-token-3';
+} from '@solana/spl-token';
 
 import { BaseRayInput } from './types';
 // import useSerumMarketAccountSizes from "./getMarketAccountSizes";
