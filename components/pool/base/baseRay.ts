@@ -32,7 +32,7 @@ import {
   MintLayout,
   NATIVE_MINT,
   TOKEN_PROGRAM_ID,
-} from '@solana/spl-token';
+} from '@solana/spl-token-3';
 
 import { BaseRayInput } from './types';
 // import useSerumMarketAccountSizes from "./getMarketAccountSizes";
