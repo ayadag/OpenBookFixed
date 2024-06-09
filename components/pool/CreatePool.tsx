@@ -7,18 +7,16 @@ import { FC } from 'react';
 // import { bundle } from "jito-ts";
 // import { Liquidity, LiquidityPoolInfo, Percent, Token, TokenAmount } from "@raydium-io/raydium-sdk";
 import BN from 'bn.js';
-import fs from 'fs';
+// import fs from 'fs';
+import save from 'save-file';
 
 import { web3 } from '@project-serum/anchor';
+import { useConnection } from '@solana/wallet-adapter-react';
 
 import { BaseRay } from './base/baseRay2';
 // import { BaseMpl } from "./base/baseMpl";
 import { Result } from './base/types';
-import {
-  ENV,
-  RPC_ENDPOINT_DEV,
-  RPC_ENDPOINT_MAIN,
-} from './constants';
+import { ENV } from './constants';
 import { CreatePoolInput } from './types';
 import {
   getKeypairFromStr,
@@ -26,11 +24,17 @@ import {
   sleep,
 } from './utils';
 
+//   const { connection } = useConnection();
+//   const { publicKey, sendTransaction } = useWallet();
+
 // import { bull_dozer } from "./jito_bundle/send-bundle";
 const log = console.log;
 
 
 export const CreatePool: FC = () => {
+
+    const { connection } = useConnection();
+    // const { publicKey, sendTransaction } = useWallet();
 
     async function createPool(input: CreatePoolInput): Promise<Result<{ poolId: string, txSignature: string, baseAmount: BN, quoteAmount: BN, baseDecimals: number, quoteDecimals: number }, string>> {
         // let { baseMintAmount, quoteMintAmount, marketId } = input
@@ -42,7 +46,7 @@ export const CreatePool: FC = () => {
         if(!keypair){
             return { Err: "keypair not found" }
         }
-        const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
+        // const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
         const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
         const marketState = await baseRay.getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
         // log({marketState})
@@ -72,7 +76,10 @@ export const CreatePool: FC = () => {
         console.log("PoolId: ", txInfo.poolId.toBase58())
         console.log("SENDING CREATE POOL TX")
         const simRes = (await connection.simulateTransaction(tx)).value
-        fs.writeFileSync('./poolCreateTxSim.json', JSON.stringify(simRes))
+        //////ayad//////////////
+        // fs.writeFileSync('./poolCreateTxSim.json', JSON.stringify(simRes))
+        await save(JSON.stringify(simRes), './poolCreateTxSim.json')
+
         const txSignature = (await web3.sendAndConfirmRawTransaction(connection, Buffer.from(rawTx), { commitment: 'confirmed' })
             .catch(async () => {
                 await sleep(500)
@@ -109,7 +116,11 @@ export const CreatePool: FC = () => {
         AMM ID: 2viGyp1hY8PGw7GEPzJvLdPAQpe7zL745oHp1C6a3jcJ
         https://openbookfixed.onrender.com/market/BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG?network=devnet&address=HLwPARhaNdaehQpkijmir6ZStHGmhHqqkrQjcdbYNyEN
         */
-        const marketIdS = "BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG"
+        // const marketIdS = "BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG"
+        // const marketIdS = "F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd"
+        // const marketIdS = "21TJSyureafPDtKd82dqwfns8XNJ9dfhhAWQYKtrnSf4"
+        const marketIdS = "9xDZVHxgkjDCatnTQaGrCah9tB33AvzfeCBSxtUuem7L"
+
         const id = getPubkeyFromStr(marketIdS)
         if (!id) {
             log("Invalid market id")
