@@ -75,7 +75,7 @@ export const CreatePool: FC = () => {
         const rawTx = tx.serialize()
         console.log("PoolId: ", txInfo.poolId.toBase58())
         console.log("SENDING CREATE POOL TX")
-        const simRes = (await connection.simulateTransaction(tx)).value
+        // const simRes = (await connection.simulateTransaction(tx)).value
         //////ayad//////////////
         // fs.writeFileSync('./poolCreateTxSim.json', JSON.stringify(simRes))
         // await save(JSON.stringify(simRes), './poolCreateTxSim.json')
