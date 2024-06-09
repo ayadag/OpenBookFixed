@@ -7,9 +7,9 @@ import { FC } from 'react';
 // import { bundle } from "jito-ts";
 // import { Liquidity, LiquidityPoolInfo, Percent, Token, TokenAmount } from "@raydium-io/raydium-sdk";
 import BN from 'bn.js';
-// import fs from 'fs';
-import save from 'save-file';
 
+// import fs from 'fs';
+// import save from 'save-file';
 import { web3 } from '@project-serum/anchor';
 import { useConnection } from '@solana/wallet-adapter-react';
 
@@ -78,7 +78,7 @@ export const CreatePool: FC = () => {
         const simRes = (await connection.simulateTransaction(tx)).value
         //////ayad//////////////
         // fs.writeFileSync('./poolCreateTxSim.json', JSON.stringify(simRes))
-        await save(JSON.stringify(simRes), './poolCreateTxSim.json')
+        // await save(JSON.stringify(simRes), './poolCreateTxSim.json')
 
         const txSignature = (await web3.sendAndConfirmRawTransaction(connection, Buffer.from(rawTx), { commitment: 'confirmed' })
             .catch(async () => {
@@ -119,7 +119,9 @@ export const CreatePool: FC = () => {
         // const marketIdS = "BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG"
         // const marketIdS = "F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd"
         // const marketIdS = "21TJSyureafPDtKd82dqwfns8XNJ9dfhhAWQYKtrnSf4"
-        const marketIdS = "9xDZVHxgkjDCatnTQaGrCah9tB33AvzfeCBSxtUuem7L"
+        // const marketIdS = "9xDZVHxgkjDCatnTQaGrCah9tB33AvzfeCBSxtUuem7L"
+        // const marketIdS = "Awzg68zDH3wSmtBan9Lkn4ADwgxbHsKhuzumsu33cEsc"
+        const marketIdS = "2AP8Bc3PmA35rBfsyjGgSpk4oEzAkb2JFTMgwZjxungx"
 
         const id = getPubkeyFromStr(marketIdS)
         if (!id) {
