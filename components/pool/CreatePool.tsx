@@ -13,7 +13,7 @@ import BN from 'bn.js';
 import { web3 } from '@project-serum/anchor';
 import { useConnection } from '@solana/wallet-adapter-react';
 
-import { BaseRay } from './base/baseRay2';
+import { BaseRay } from './base/baseRay';
 // import { BaseMpl } from "./base/baseMpl";
 import { Result } from './base/types';
 import { ENV } from './constants';
