@@ -1,3 +1,7 @@
+// export class baseRay {
+//   public h = "hello world"
+// }
+
 import { toBufferBE } from 'bigint-buffer';
 
 // import { BaseSpl } from "./baseSpl";
