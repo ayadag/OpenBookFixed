@@ -15,14 +15,10 @@ import {
 } from '@project-serum/anchor';
 import {
   Liquidity,
-//   LIQUIDITY_STATE_LAYOUT_V4,
-//   LIQUIDITY_STATE_LAYOUT_V5,
   LiquidityAssociatedPoolKeys,
   LiquidityPoolJsonInfo,
   LiquidityPoolKeys,
   LiquidityPoolKeysV4,
-//   LiquidityStateV4,
-//   LiquidityStateV5,
   Market as RayMarket,
   Percent,
   SPL_ACCOUNT_LAYOUT,
