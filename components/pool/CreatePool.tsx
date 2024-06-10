@@ -20,7 +20,8 @@ import { web3 } from '@project-serum/anchor';
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 import { useConnection } from '@solana/wallet-adapter-react';
 
-import { BaseRay } from './base/baseRay';
+// import { BaseRay } from './base/baseRay';
+import { BaseRay } from './base/BaseRay';
 
 // import { BaseMpl } from "./base/baseMpl";
 // import { Result } from './base/types';
