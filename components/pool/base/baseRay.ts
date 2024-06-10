@@ -37,10 +37,12 @@ import {
 //   // NATIVE_MINT,
 //   // TOKEN_PROGRAM_ID,
 // } from '@solana/spl-token-3';
-import {
-  NATIVE_MINT,
-  TOKEN_PROGRAM_ID,
-} from '@solana/spl-token';
+import { NATIVE_MINT } from '@solana/spl-token-2';
+import { PublicKey } from '@solana/web3.js';
+
+const TOKEN_PROGRAM_ID = new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") 
+
+console.log("TOKEN_PROGRAM_ID", TOKEN_PROGRAM_ID)
 
 // import { BaseRayInput } from './types';
 
