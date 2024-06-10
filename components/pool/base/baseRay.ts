@@ -30,6 +30,7 @@ import {
   TokenAmount,
   TxVersion,
 } from '@raydium-io/raydium-sdk';
+
 // import fs from 'fs';
 // import {
 //   getAssociatedTokenAddressSync,
@@ -38,13 +39,14 @@ import {
 //   // TOKEN_PROGRAM_ID,
 // } from '@solana/spl-token-3';
 // import { NATIVE_MINT } from '@solana/spl-token-2';
-import { PublicKey } from '@solana/web3.js';
+// import { PublicKey, } from '@solana/web3.js';
 
-const NATIVE_MINT = new PublicKey("So11111111111111111111111111111111111111112") 
+// const NATIVE_MINT = new PublicKey("So11111111111111111111111111111111111111112") 
+const NATIVE_MINT = new web3.PublicKey("So11111111111111111111111111111111111111112") 
 
 console.log("NATIVE_MINT",NATIVE_MINT)
 
-const TOKEN_PROGRAM_ID = new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") 
+const TOKEN_PROGRAM_ID = new web3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") 
 
 console.log("TOKEN_PROGRAM_ID", TOKEN_PROGRAM_ID)
 
