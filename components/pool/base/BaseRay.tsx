@@ -1117,4 +1117,17 @@ async function createPool (input: CreatePoolInput, user: web3.PublicKey) {
 
 }
 
+async function getMarketInfo(marketId: web3.PublicKey) {
+  // const marketAccountInfo = await this.connection.getAccountInfo(marketId).catch((error) => null)
+  const marketAccountInfo = await this.connection.getAccountInfo(marketId).catch(() => null)
+  if (!marketAccountInfo) throw "Market not found"
+  try {
+    return RayMarket.getLayouts(3).state.decode(marketAccountInfo.data)
+  } catch (parseMeketDataError) {
+    log({ parseMeketDataError })
+  }
+  return null
+}
+
+export getMarketInfo;
 export default createPool;
