@@ -17,18 +17,43 @@ import BN from 'bn.js';
 // import fs from 'fs';
 // import save from 'save-file';
 import { web3 } from '@project-serum/anchor';
+import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 import { useConnection } from '@solana/wallet-adapter-react';
 
 import { BaseRay } from './base/baseRay';
+
 // import { BaseMpl } from "./base/baseMpl";
-import { Result } from './base/types';
-import { ENV } from './constants';
-import { CreatePoolInput } from './types';
-import {
-  getKeypairFromStr,
-  getPubkeyFromStr,
-  sleep,
-} from './utils';
+// import { Result } from './base/types';
+type Result<T, E = any> = {
+    Ok?: T,
+    Err?: E
+}
+
+// import { ENV } from './constants';
+
+const ENV = {
+    PINATA_API_kEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+    PINATA_DOMAIN : "https://",
+    PINATA_API_SECRET_KEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+    IN_PRODUCTION : false,
+    COMPUTE_UNIT_PRICE : 1_800_000, // default: 200_000 
+    JITO_AUTH_KEYPAIR : getKeypairFromStr("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")!,
+    JITO_BLOCK_ENGINE_URL : "https://"
+}
+
+// import { CreatePoolInput } from './types';
+// import {
+//   getKeypairFromStr,
+//   getPubkeyFromStr,
+//   sleep,
+// } from './utils';
+
+export type CreatePoolInput = {
+    marketId: web3.PublicKey,
+    baseMintAmount: number,
+    quoteMintAmount: number,
+    url: 'mainnet' | 'devnet',
+}
 
 //   const { connection } = useConnection();
 //   const { publicKey, sendTransaction } = useWallet();
@@ -36,6 +61,24 @@ import {
 // import { bull_dozer } from "./jito_bundle/send-bundle";
 const log = console.log;
 
+export function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  export function getPubkeyFromStr(str?: string) {
+    try {
+      return new web3.PublicKey((str ?? "").trim())
+    } catch (error) {
+      return null
+    }
+  }
+
+  export function getKeypairFromStr(str: string): web3.Keypair | null {
+    try {
+      return web3.Keypair.fromSecretKey(Uint8Array.from(bs58.decode(str)))
+    } catch (error) {
+      return null
+    }
+  }
 
 export const CreatePool: FC = () => {
 

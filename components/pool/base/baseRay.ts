@@ -39,10 +39,18 @@ import {
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
 
-import { BaseRayInput } from './types';
+// import { BaseRayInput } from './types';
+
+type BaseRayInput = {
+  rpcEndpointUrl: string
+}
+
 // import useSerumMarketAccountSizes from "./getMarketAccountSizes";
 // import { Result } from "./types";
-import { calcNonDecimalValue } from './utils';
+// import { calcNonDecimalValue } from './utils';
+function calcNonDecimalValue(value: number, decimals: number): number {
+  return Math.trunc(value * (Math.pow(10, decimals)))
+}
 
 // import { ENV } from "../constants";
 
