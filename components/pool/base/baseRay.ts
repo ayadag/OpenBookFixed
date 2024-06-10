@@ -37,8 +37,12 @@ import {
 //   // NATIVE_MINT,
 //   // TOKEN_PROGRAM_ID,
 // } from '@solana/spl-token-3';
-import { NATIVE_MINT } from '@solana/spl-token-2';
+// import { NATIVE_MINT } from '@solana/spl-token-2';
 import { PublicKey } from '@solana/web3.js';
+
+const NATIVE_MINT = new PublicKey("So11111111111111111111111111111111111111112") 
+
+console.log("NATIVE_MINT",NATIVE_MINT)
 
 const TOKEN_PROGRAM_ID = new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") 
 
