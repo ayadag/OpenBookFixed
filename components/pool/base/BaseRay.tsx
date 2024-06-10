@@ -129,7 +129,7 @@ const log = console.log
 export class BaseRay {
   private connection: web3.Connection
 //   private baseSpl: BaseSpl
-//   private cacheIxs: web3.TransactionInstruction[]
+  private cacheIxs: web3.TransactionInstruction[]
   // private pools: LiquidityPoolJsonInfo[];
 //   private pools: Map<string, LiquidityPoolJsonInfo>;
   private cachedPoolKeys: Map<string, LiquidityPoolKeys>;
