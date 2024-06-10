@@ -38,7 +38,6 @@ import {
 //   // TOKEN_PROGRAM_ID,
 // } from '@solana/spl-token-3';
 import {
-  MintLayout,
   NATIVE_MINT,
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
@@ -533,8 +532,19 @@ export class BaseRay {
         } as any
       }
     }
-    const baseMintState = MintLayout.decode(baseMintAccountInfo.data);
-    const quoteMintState = MintLayout.decode(quoteMintAccountInfo.data);
+
+    ////////ayad/////////
+    // const baseMintState = MintLayout.decode(baseMintAccountInfo.data);
+    // const quoteMintState = MintLayout.decode(quoteMintAccountInfo.data);
+
+    const baseMintState ={
+      decimals: 9
+    }
+    const quoteMintState ={
+      decimals: 9
+    }
+    ////////ayad//////////
+    console.log("MintLayout.decode",baseMintState,quoteMintState)
     // const marketState = RayMarket.getLayouts(3).state.decode(marketAccountInfo.data)
     const marketInfo = {
       marketId: input.marketId,
