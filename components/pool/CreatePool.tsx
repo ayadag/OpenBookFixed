@@ -96,7 +96,9 @@ export const CreatePool: FC = () => {
             return { Err: "keypair not found" }
         }
         // const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
-        const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
+        // const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
+
+        const baseRay = new BaseRay()
         const marketState = await baseRay.getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
         // log({marketState})
         if (!marketState) {
