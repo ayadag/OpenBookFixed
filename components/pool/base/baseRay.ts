@@ -27,14 +27,13 @@ import {
   TxVersion,
 } from '@raydium-io/raydium-sdk';
 // import fs from 'fs';
+// import {
+//   getAssociatedTokenAddressSync,
+//   // MintLayout,
+//   // NATIVE_MINT,
+//   // TOKEN_PROGRAM_ID,
+// } from '@solana/spl-token-3';
 import {
-  getAssociatedTokenAddressSync,
-  // MintLayout,
-  // NATIVE_MINT,
-  // TOKEN_PROGRAM_ID,
-} from '@solana/spl-token-3';
-import {
-  // getAssociatedTokenAddressSync,
   MintLayout,
   NATIVE_MINT,
   TOKEN_PROGRAM_ID,
@@ -460,8 +459,16 @@ export class BaseRay {
 
   async createPool(input: CreatePoolInput, user: web3.PublicKey) {
     this.reInit();
-    const userBaseAta = getAssociatedTokenAddressSync(input.baseMint, user)
-    const userQuoteAta = getAssociatedTokenAddressSync(input.quoteMint, user)
+    /////////ayad//////////
+    // const userBaseAta = getAssociatedTokenAddressSync(input.baseMint, user)
+    // const userQuoteAta = getAssociatedTokenAddressSync(input.quoteMint, user)
+
+    // ///////////ayad/////////////
+    // console.log(userBaseAta, userQuoteAta)
+
+    const userBaseAta = new web3.PublicKey("6vgZNorE36XPYvpGYVYSwXvnQiWAJYCDkfeVHKvPrMeS")
+    const userQuoteAta = new web3.PublicKey("2nB4UbHGuHx66mtZ2xEmC84Fy6szHJuDSJBvMJzYKjcn")
+    console.log(userBaseAta, userQuoteAta)
 
     // let [baseMintAccountInfo, quoteMintAccountInfo, marketAccountInfo, userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId, userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
     let [userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
