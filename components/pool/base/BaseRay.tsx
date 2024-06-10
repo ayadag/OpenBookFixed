@@ -130,11 +130,11 @@ export class BaseRay {
   private connection: web3.Connection
 //   private baseSpl: BaseSpl
   private cacheIxs: web3.TransactionInstruction[]
-  // private pools: LiquidityPoolJsonInfo[];
-//   private pools: Map<string, LiquidityPoolJsonInfo>;
+  private pools: LiquidityPoolJsonInfo[];
+  private pools: Map<string, LiquidityPoolJsonInfo>;
   private cachedPoolKeys: Map<string, LiquidityPoolKeys>;
   ammProgramId: web3.PublicKey
-//   private orderBookProgramId: web3.PublicKey
+  private orderBookProgramId: web3.PublicKey
   private feeDestinationId: web3.PublicKey
 
   // constructor(input: BaseRayInput) {
