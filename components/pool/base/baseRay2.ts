@@ -280,6 +280,7 @@ export class BaseRay {
       marketQuoteVault,
       marketEventQueue,
     }
+    console.log(res)
     this.cachedPoolKeys.set(poolId.toBase58(), res)
     // log({ poolKeys: res })
     return res;
