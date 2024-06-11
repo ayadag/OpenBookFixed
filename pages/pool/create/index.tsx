@@ -8,7 +8,7 @@ import { CreatePool } from '../../../components/pool/CreatePool2';
 const Pool = () => {
     return(
         // <Layout>
-            // <CreatePool2/>
+            // <CreatePool3/>
             <CreatePool/>
         // </Layout>
     )
