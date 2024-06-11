@@ -52,9 +52,9 @@ console.log("TOKEN_PROGRAM_ID", TOKEN_PROGRAM_ID)
 
 // import { BaseRayInput } from './types';
 
-type BaseRayInput = {
-  rpcEndpointUrl: string
-}
+// type BaseRayInput = {
+//   rpcEndpointUrl: string
+// }
 
 // import useSerumMarketAccountSizes from "./getMarketAccountSizes";
 // import { Result } from "./types";
