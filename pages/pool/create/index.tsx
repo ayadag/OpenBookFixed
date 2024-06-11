@@ -1,6 +1,6 @@
 "use client";
 // import Layout from '../../../components/layouts/layout';
-import { CreatePool2 } from '../../../components/pool/CreatePools';
+import { CreatePool2 } from '../../../components/pool/CreatePool2';
 
 const Pool = () => {
     return(
