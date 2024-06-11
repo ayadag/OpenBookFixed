@@ -964,6 +964,42 @@ export class BaseRay {
 //   }
 }
 
+let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
+function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
+  const { authority, baseDecimals, baseMint, baseVault, id, lookupTableAccount, lpDecimals, lpMint, lpVault, marketAuthority, marketId, marketProgramId, marketVersion, openOrders, programId, quoteDecimals, quoteMint, quoteVault, targetOrders, version, withdrawQueue, } = poolInfo
+  const { baseVault: marketBaseVault, quoteVault: marketQuoteVault, eventQueue: marketEventQueue, bids: marketBids, asks: marketAsks } = marketState
+  // let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
+
+  const res: LiquidityPoolKeys = {
+    baseMint,
+    quoteMint,
+    quoteDecimals,
+    baseDecimals,
+    authority,
+    baseVault,
+    quoteVault,
+    id,
+    lookupTableAccount,
+    lpDecimals,
+    lpMint,
+    lpVault,
+    marketAuthority,
+    marketId,
+    marketProgramId,
+    marketVersion,
+    openOrders,
+    programId,
+    targetOrders,
+    version,
+    withdrawQueue,
+    marketAsks,
+    marketBids,
+    marketBaseVault,
+    marketQuoteVault,
+    marketEventQueue,
+  }
+  cachedPoolKeys.set(id.toBase58(), res)
+}
 
 async function createPool (input: CreatePoolInput, user: web3.PublicKey) {
   const connection = new web3.Connection("https://api.devnet.solana.com", { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
@@ -1075,7 +1111,7 @@ async function createPool (input: CreatePoolInput, user: web3.PublicKey) {
       marketProgramId: marketInfo.programId,
     })
     const marketState = RayMarket.getLayouts(3).state.decode(marketAccountInfo.data)
-    this.addPoolKeys(poolInfo, marketState);
+    addPoolKeys(poolInfo, marketState);
 
     const startTime = new BN(Math.trunc(Date.now() / 1000) - 4)
 

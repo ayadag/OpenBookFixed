@@ -161,15 +161,15 @@ export class BaseRay {
     this.cacheIxs = []
     this.cachedPoolKeys = new Map();
     this.pools = new Map();
-    if ("https://api.devnet.solana.com" == "https://api.devnet.solana.com") {
+    // if ("https://api.devnet.solana.com" == "https://api.devnet.solana.com") {
       this.ammProgramId = new web3.PublicKey("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8")
       this.feeDestinationId = new web3.PublicKey("3XMrhbv989VxAMi3DErLV9eJht1pHppW5LbKxe9fkEFR")
       this.orderBookProgramId = new web3.PublicKey("EoTcMgcDRTJVZDMZWBoU6rhYHZfkNTVEAfz3uUJRcYGj")
-    } else {
-      this.feeDestinationId = new web3.PublicKey("7YttLkHDoNj9wyDur5pM1ejNaAvT9X4eqaYcHQqtj2G5")
-      this.ammProgramId = new web3.PublicKey("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8")
-      this.orderBookProgramId = new web3.PublicKey("srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX")
-    }
+    // } else {
+    //   this.feeDestinationId = new web3.PublicKey("7YttLkHDoNj9wyDur5pM1ejNaAvT9X4eqaYcHQqtj2G5")
+    //   this.ammProgramId = new web3.PublicKey("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8")
+    //   this.orderBookProgramId = new web3.PublicKey("srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX")
+    // }
 
 
   }
