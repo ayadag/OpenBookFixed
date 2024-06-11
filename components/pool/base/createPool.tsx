@@ -1,14 +1,5 @@
-// export class baseRay {
-//   public h = "hello world"
-// }
-
 import { toBufferBE } from 'bigint-buffer';
 
-// import { BaseSpl } from "./baseSpl";
-// import { createSyncNativeInstruction } from '@solana/spl-token'
-// import { EVENT_QUEUE_LENGTH, ORDERBOOK_LENGTH, REQUEST_QUEUE_LENGTH, getVaultOwnerAndNonce } from "./orderbookUtils";
-// import { DexInstructions, Market, MARKET_STATE_LAYOUT_V2, MARKET_STATE_LAYOUT_V3 } from "@openbook-dex/openbook";
-// import { _MARKET_STAT_LAYOUT_V1 } from "@openbook-dex/openbook/lib/market";
 import {
   BN,
   web3,
@@ -22,17 +13,6 @@ import {
   TxVersion,
 } from '@raydium-io/raydium-sdk';
 
-// import fs from 'fs';
-// import {
-//   getAssociatedTokenAddressSync,
-//   // MintLayout,
-//   // NATIVE_MINT,
-//   // TOKEN_PROGRAM_ID,
-// } from '@solana/spl-token-3';
-// import { NATIVE_MINT } from '@solana/spl-token-2';
-// import { PublicKey, } from '@solana/web3.js';
-
-// const NATIVE_MINT = new PublicKey("So11111111111111111111111111111111111111112") 
 const NATIVE_MINT = new web3.PublicKey("So11111111111111111111111111111111111111112") 
 
 console.log("NATIVE_MINT",NATIVE_MINT)
@@ -41,53 +21,11 @@ const TOKEN_PROGRAM_ID = new web3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss
 
 console.log("TOKEN_PROGRAM_ID", TOKEN_PROGRAM_ID)
 
-// import { BaseRayInput } from './types';
 
-// type BaseRayInput = {
-//   rpcEndpointUrl: string
-// }
-
-// import useSerumMarketAccountSizes from "./getMarketAccountSizes";
-// import { Result } from "./types";
-// import { calcNonDecimalValue } from './utils';
 function calcNonDecimalValue(value: number, decimals: number): number {
   return Math.trunc(value * (Math.pow(10, decimals)))
 }
 
-// import { ENV } from "../constants";
-
-// export const RAYDIUM_AMM_PROGRAM = new web3.PublicKey("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8")
-// const _OPEN_BOOK_DEX_PROGRAM = "srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX"
-// export type CreateMarketInput = {
-//   baseMint: web3.PublicKey,
-//   quoteMint: web3.PublicKey
-//   tickers: {
-//     lotSize: number,
-//     tickSize: number
-//   }
-// }
-
-// export type AddLiquidityInput = {
-//   user: web3.PublicKey
-//   poolKeys: LiquidityPoolKeys,
-//   baseMintAmount: number | BN,
-//   quoteMintAmount: number | BN,
-//   fixedSide: 'base' | 'quote'
-// }
-// export type RemoveLiquidityInput = {
-//   user: web3.PublicKey
-//   poolKeys: LiquidityPoolKeys,
-//   amount: number,
-// }
-// export type BuyFromPoolInput = {
-//   poolKeys: LiquidityPoolKeys,
-//   amountIn: TokenAmount
-//   amountOut: TokenAmount
-//   user: web3.PublicKey
-//   fixedSide: SwapSide
-//   tokenAccountIn: web3.PublicKey,
-//   tokenAccountOut: web3.PublicKey
-// }
 export type CreatePoolInput = {
   baseMint: web3.PublicKey,
   quoteMint: web3.PublicKey,
@@ -95,28 +33,6 @@ export type CreatePoolInput = {
   baseMintAmount: number,
   quoteMintAmount: number,
 }
-// export type ComputeBuyAmountInput = {
-//   poolKeys: LiquidityPoolKeys,
-//   user: web3.PublicKey
-//   amount: number,
-//   inputAmountType: 'send' | 'receive',
-//   buyToken: 'base' | 'quote',
-//   /** default (1 %) */
-//   slippage?: Percent
-// }
-
-// export type ComputeAnotherAmountInput = {
-//   poolKeys: LiquidityPoolKeysV4,
-//   amount: number
-//   /** default( `true` ) */
-//   isRawAmount?: boolean
-//   /** default( `Percent(1, 100)` = 1%) */
-//   slippage?: Percent,
-//   fixedSide: 'base' | 'quote',
-// }
-
-
-
 
 
 
