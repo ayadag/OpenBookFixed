@@ -83,7 +83,7 @@ export function sleep(ms: number) {
     }
   }
 
-export const CreatePool: FC = () => {
+export const CreatePool2: FC = () => {
 
     const { connection } = useConnection();
     // const { publicKey, sendTransaction } = useWallet();
