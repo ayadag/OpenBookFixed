@@ -42,6 +42,8 @@ let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
 function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
     const { authority, baseDecimals, baseMint, baseVault, id, lookupTableAccount, lpDecimals, lpMint, lpVault, marketAuthority, marketId, marketProgramId, marketVersion, openOrders, programId, quoteDecimals, quoteMint, quoteVault, targetOrders, version, withdrawQueue, } = poolInfo
     const { baseVault: marketBaseVault, quoteVault: marketQuoteVault, eventQueue: marketEventQueue, bids: marketBids, asks: marketAsks } = marketState
+    // let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
+
     const res: LiquidityPoolKeys = {
       baseMint,
       quoteMint,
@@ -70,7 +72,9 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
       marketQuoteVault,
       marketEventQueue,
     }
+    console.log(res)
     cachedPoolKeys.set(id.toBase58(), res)
+    console.log(cachedPoolKeys)
   }
 
 
