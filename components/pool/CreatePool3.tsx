@@ -177,8 +177,9 @@ export const CreatePool3: FC = () => {
         // const marketIdS = "21TJSyureafPDtKd82dqwfns8XNJ9dfhhAWQYKtrnSf4"
         // const marketIdS = "9xDZVHxgkjDCatnTQaGrCah9tB33AvzfeCBSxtUuem7L"
         // const marketIdS = "Awzg68zDH3wSmtBan9Lkn4ADwgxbHsKhuzumsu33cEsc"
-        const marketIdS = "2AP8Bc3PmA35rBfsyjGgSpk4oEzAkb2JFTMgwZjxungx"
-
+        // const marketIdS = "2AP8Bc3PmA35rBfsyjGgSpk4oEzAkb2JFTMgwZjxungx"
+        const marketIdS = "Chy7Ueoz1KsGTtxHT6wFUpM4W3qq2Z8QdfRnHR5DUfJc"
+        
         const id = getPubkeyFromStr(marketIdS)
         if (!id) {
             log("Invalid market id")
