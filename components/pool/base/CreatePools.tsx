@@ -37,7 +37,8 @@ export type CreatePoolInput = {
 
 
 
-let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
+// let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
+const cachedPoolKeys = new Map<string, LiquidityPoolKeys>();
 
 function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
     const { authority, baseDecimals, baseMint, baseVault, id, lookupTableAccount, lpDecimals, lpMint, lpVault, marketAuthority, marketId, marketProgramId, marketVersion, openOrders, programId, quoteDecimals, quoteMint, quoteVault, targetOrders, version, withdrawQueue, } = poolInfo
@@ -73,6 +74,7 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
       marketEventQueue,
     }
     console.log("res",res)
+    // let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
     cachedPoolKeys.set(id.toBase58(), res)
     console.log("cachedPoolKeys",cachedPoolKeys)
   }
