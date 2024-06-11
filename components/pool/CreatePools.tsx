@@ -20,8 +20,10 @@ import { web3 } from '@project-serum/anchor';
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 import { useConnection } from '@solana/wallet-adapter-react';
 
+import CreatePools from './base/CreatePools';
 // import { BaseRay } from './base/baseRay';
-import { BaseRay } from './base/baseRay';
+// import { BaseRay } from './base/baseRay';
+import getMarketInfo from './base/getMarketInfo';
 
 // import { BaseMpl } from "./base/baseMpl";
 // import { Result } from './base/types';
@@ -99,8 +101,9 @@ export const CreatePool: FC = () => {
         // const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
         // const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
 
-        const baseRay = new BaseRay()
-        const marketState = await baseRay.getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
+        // const baseRay = new BaseRay()
+        // const marketState = await baseRay.getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
+        const marketState = await getMarketInfo(marketId).catch((getMarketInfoError) => { log({ getMarketInfoError }); return null })
         // log({marketState})
         if (!marketState) {
             return { Err: "market not found" }
@@ -112,7 +115,8 @@ export const CreatePool: FC = () => {
         })
 
         
-        const txInfo = await baseRay.createPool({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
+        // const txInfo = await baseRay.createPool({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
+        const txInfo = await CreatePools({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
         if (!txInfo) return { Err: "Failed to prepare create pool transaction" }
         // speedup
         const updateCuIx = web3.ComputeBudgetProgram.setComputeUnitPrice({ microLamports: ENV.COMPUTE_UNIT_PRICE })

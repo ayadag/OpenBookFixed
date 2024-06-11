@@ -75,7 +75,7 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
 
 
 
-async function createPool (input: CreatePoolInput, user: web3.PublicKey) {
+async function CreatePools (input: CreatePoolInput, user: web3.PublicKey) {
   const connection = new web3.Connection("https://api.devnet.solana.com", { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
   const ammProgramId = new web3.PublicKey("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8")
   const feeDestinationId = new web3.PublicKey("3XMrhbv989VxAMi3DErLV9eJht1pHppW5LbKxe9fkEFR")
@@ -227,4 +227,4 @@ async function createPool (input: CreatePoolInput, user: web3.PublicKey) {
 
 }
 
-export default createPool;
+export default CreatePools;
