@@ -317,7 +317,9 @@ export class BaseRay {
       marketQuoteVault,
       marketEventQueue,
     }
+    console.log("res",res)
     this.cachedPoolKeys.set(id.toBase58(), res)
+    console.log("this.cachedPoolKeys",this.cachedPoolKeys)
   }
 
 

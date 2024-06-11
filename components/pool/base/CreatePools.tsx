@@ -75,7 +75,6 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
     console.log("res",res)
     cachedPoolKeys.set(id.toBase58(), res)
     console.log("cachedPoolKeys",cachedPoolKeys)
-    return res;
   }
 
 
