@@ -1,11 +1,15 @@
 "use client";
 // import Layout from '../../../components/layouts/layout';
-import { CreatePool2 } from '../../../components/pool/CreatePool2';
+import { CreatePool } from '../../../components/pool/CreatePool2';
+
+// import { CreatePool3 } from '../../../components/pool/CreatePool3';
+// import { CreatePool } from '../../../components/pool/CreatePool';
 
 const Pool = () => {
     return(
         // <Layout>
-            <CreatePool2/>
+            // <CreatePool2/>
+            <CreatePool/>
         // </Layout>
     )
 }
