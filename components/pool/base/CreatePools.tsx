@@ -73,8 +73,7 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
       marketEventQueue,
     }
     console.log("res",res)
-    let poolId: any
-    cachedPoolKeys.set(poolId.toBase58(), res)
+    cachedPoolKeys.set(id.toBase58(), res)
     console.log("cachedPoolKeys",cachedPoolKeys)
     return res;
   }
