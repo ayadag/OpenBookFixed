@@ -1,9 +1,6 @@
 import { toBufferBE } from 'bigint-buffer';
 
-<<<<<<< HEAD
 // import { FC } from 'react';
-=======
->>>>>>> b6f28704a847510d3c7c6418b1ea4627e7cf5ccb
 import {
   BN,
   web3,
@@ -16,12 +13,9 @@ import {
   SPL_ACCOUNT_LAYOUT,
   TxVersion,
 } from '@raydium-io/raydium-sdk';
-<<<<<<< HEAD
 import { getAssociatedTokenAddressSync } from '@solana/spl-token-4';
 
 // import { useConnection } from '@solana/wallet-adapter-react';
-=======
->>>>>>> b6f28704a847510d3c7c6418b1ea4627e7cf5ccb
 
 const NATIVE_MINT = new web3.PublicKey("So11111111111111111111111111111111111111112") 
 
@@ -91,17 +85,12 @@ function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
 
 
 
-<<<<<<< HEAD
 // async function CreatePools (input: CreatePoolInput, user: web3.PublicKey) {
 
 async function CreatePools (input: CreatePoolInput, user: web3.PublicKey, connection: web3.Connection) {
     // const connection = new web3.Connection("https://api.devnet.solana.com", { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
 //   const { connection } = useConnection();
 
-=======
-async function CreatePools (input: CreatePoolInput, user: web3.PublicKey) {
-  const connection = new web3.Connection("https://api.devnet.solana.com", { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
->>>>>>> b6f28704a847510d3c7c6418b1ea4627e7cf5ccb
   const ammProgramId = new web3.PublicKey("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8")
   const feeDestinationId = new web3.PublicKey("3XMrhbv989VxAMi3DErLV9eJht1pHppW5LbKxe9fkEFR")
   // const orderBookProgramId = new web3.PublicKey("EoTcMgcDRTJVZDMZWBoU6rhYHZfkNTVEAfz3uUJRcYGj")
@@ -113,16 +102,11 @@ async function CreatePools (input: CreatePoolInput, user: web3.PublicKey) {
 
   // reInit()
 
-<<<<<<< HEAD
 //   const userBaseAta = new web3.PublicKey("6vgZNorE36XPYvpGYVYSwXvnQiWAJYCDkfeVHKvPrMeS")
 //   const userQuoteAta = new web3.PublicKey("2nB4UbHGuHx66mtZ2xEmC84Fy6szHJuDSJBvMJzYKjcn")
 
   const userBaseAta = getAssociatedTokenAddressSync(input.baseMint, user)
   const userQuoteAta = getAssociatedTokenAddressSync(input.quoteMint, user)
-=======
-  const userBaseAta = new web3.PublicKey("6vgZNorE36XPYvpGYVYSwXvnQiWAJYCDkfeVHKvPrMeS")
-  const userQuoteAta = new web3.PublicKey("2nB4UbHGuHx66mtZ2xEmC84Fy6szHJuDSJBvMJzYKjcn")
->>>>>>> b6f28704a847510d3c7c6418b1ea4627e7cf5ccb
   console.log(userBaseAta, userQuoteAta)
   
   // let [baseMintAccountInfo, quoteMintAccountInfo, marketAccountInfo, userBaseAtaInfo, userQuoteAtaInfo] = await this.connection.getMultipleAccountsInfo([input.baseMint, input.quoteMint, input.marketId, userBaseAta, userQuoteAta]).catch(() => [null, null, null, null])
@@ -260,8 +244,4 @@ async function CreatePools (input: CreatePoolInput, user: web3.PublicKey) {
 
 }
 
-<<<<<<< HEAD
 export default CreatePools;
-=======
-export default CreatePools;
->>>>>>> b6f28704a847510d3c7c6418b1ea4627e7cf5ccb
