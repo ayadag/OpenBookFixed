@@ -4,7 +4,10 @@
 //     )
 // }
 
-import { FC, useState } from 'react';
+import {
+  FC,
+  useState,
+} from 'react';
 
 // import { Metadata, TokenStandard } from "@metaplex-foundation/mpl-token-metadata";
 // import { AccountLayout, MintLayout, NATIVE_MINT, TOKEN_PROGRAM_ID, createAssociatedTokenAccountInstruction, createCloseAccountInstruction, getAssociatedTokenAddressSync } from '@solana/spl-token'
@@ -19,9 +22,9 @@ import BN from 'bn.js';
 import { web3 } from '@project-serum/anchor';
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 import {
-    useConnection,
-    useWallet,
-  } from '@solana/wallet-adapter-react';
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
 
 import CreatePools from './base/CreatePools';
 // import { BaseRay } from './base/baseRay';
@@ -89,7 +92,7 @@ export function sleep(ms: number) {
 export const CreatePool: FC = () => {
 
     const { connection } = useConnection();
-    const { wallet } = useWallet();
+    const { wallet, publicKey } = useWallet();
 
     const [marketIdS, setMarketIdS] = useState('')
 
@@ -105,6 +108,9 @@ export const CreatePool: FC = () => {
         const keypair = wallet;
         if(!keypair){
             return { Err: "keypair not found" }
+        }
+        if(!publicKey){
+            return { Err: "publicKey not found" }
         }
         // const connection = new web3.Connection(input.url == 'mainnet' ? RPC_ENDPOINT_MAIN : RPC_ENDPOINT_DEV, { commitment: "confirmed", confirmTransactionInitialTimeout: 60000 })
         // const baseRay = new BaseRay({ rpcEndpointUrl: connection.rpcEndpoint })
@@ -124,20 +130,20 @@ export const CreatePool: FC = () => {
 
         
         // const txInfo = await baseRay.createPool({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
-        const txInfo = await CreatePools({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, keypair.publicKey).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
+        const txInfo = await CreatePools({ baseMint, quoteMint, marketId, baseMintAmount, quoteMintAmount }, publicKey, connection).catch((innerCreatePoolError) => { log({ innerCreatePoolError }); return null })
         if (!txInfo) return { Err: "Failed to prepare create pool transaction" }
         // speedup
         const updateCuIx = web3.ComputeBudgetProgram.setComputeUnitPrice({ microLamports: ENV.COMPUTE_UNIT_PRICE })
         const recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
         const txMsg = new web3.TransactionMessage({
             instructions: [updateCuIx, ...txInfo.ixs],
-            payerKey: keypair.publicKey,
+            payerKey: publicKey,
             recentBlockhash,
         }).compileToV0Message()
         const tx = new web3.VersionedTransaction(txMsg)
         ///////ayad////////////
         // tx.sign([keypair, ...txInfo.signers])
-        tx.sign([keypair])
+        tx.sign([...txInfo.signers])
         const rawTx = tx.serialize()
         console.log("PoolId: ", txInfo.poolId.toBase58())
         console.log("SENDING CREATE POOL TX")
