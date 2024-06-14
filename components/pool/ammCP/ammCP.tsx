@@ -8,20 +8,27 @@ import {
   web3,
 } from '@project-serum/anchor';
 import {
+  buildSimpleTransaction,
+  InnerSimpleV0Transaction,
   Liquidity,
   Market as RayMarket,
   Token,
 } from '@raydium-io/raydium-sdk';
-import { PublicKey } from '@solana/web3.js';
+import {
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
+import {
+  PublicKey,
+  SendOptions,
+} from '@solana/web3.js';
 
 import {
+  addLookupTableInfo,
   makeTxVersion,
   PROGRAMIDS,
 } from '../../../config';
-import {
-  buildAndSendTx,
-  getWalletTokenAccount,
-} from '../../util/utils';
+import { getWalletTokenAccount } from '../../util/utils';
 
 // const ZERO = new BN(0)
 // type BN = typeof ZERO
@@ -87,7 +94,7 @@ export async function getMarketInfo(marketId: web3.PublicKey, connection: web3.C
 }
   
 
-export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Connection): Promise<{ txids: string[] }> {
+export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Connection): Promise<{ txids: string[] | void }> {
   // -------- step 1: make instructions --------
   const initPoolInstructionResponse = await Liquidity.makeCreatePoolV4InstructionV2Simple({
     connection,
@@ -118,76 +125,54 @@ export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Con
   
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions) }
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
-  return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, connection, wallet, { skipPreflight: true }) }
+  return { txids: await BuildAndSendTx2(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
 
 }
 
-// async function howToUse() {
-//   // const baseToken = DEFAULT_TOKEN.USDC // USDC
-//   // const quoteToken = DEFAULT_TOKEN.RAY // RAY
-//   const baseToken = DEFAULT_TOKEN.SALD // USDC
-//   const quoteToken = DEFAULT_TOKEN.sol // RAY
-//   // const targetMarketId = Keypair.generate().publicKey
-//   // const targetMarketId = web3.Keypair.fromSecretKey(Uint8Array.from(bs58.decode("F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd")))
-//   // const targetMarketId= getPubkeyFromStr("F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd")
-//   // const targetMarketId= getPubkeyFromStr("BzcDHvKWD4LyW4X1NUEaWLBaNmyiCUKqcd3jXDRhwwAG")
-//   // const targetMarketId= getPubkeyFromStr("21TJSyureafPDtKd82dqwfns8XNJ9dfhhAWQYKtrnSf4")
-//   // const targetMarketId= getPubkeyFromStr("7k9CxPBSmdLr1HHvsp55RKJN3uy8ayTJALciqq54qY2A")
-//   // const targetMarketId= getPubkeyFromStr("4cDFyfxhn1hD5WxdiJGDCMkpFCXm7g63LEAzsgt6bzWX")
-//   // const targetMarketId= getPubkeyFromStr("9iLzCPDnbSTaYrBqA7MWqCHSKMJByofGzvMph7Y8yeim")
-//   const targetMarketId= getPubkeyFromStr("4cDFyfxhn1hD5WxdiJGDCMkpFCXm7g63LEAzsgt6bzWX")
+export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Transaction[], options?: SendOptions) {
+    const { publicKey } = useWallet();
+    const { connection } = useConnection();
+    if(!publicKey){return console.log("publicKey not found")}
+
+    const willSendTx = await buildSimpleTransaction({
+      connection,
+      makeTxVersion,
+      payer: publicKey,
+      innerTransactions: innerSimpleV0Transaction,
+      addLookupTableInfo: addLookupTableInfo,
+    })
+
+    // if(!signAllTransactions){return console.log("signAllTransactions undefine")}
+    // const signed = signAllTransactions(willSendTx)
   
-  
-//   if (targetMarketId  == null) {
-//     return { Err: " not found" }
-//   } 
+    return await SendTx(connection, willSendTx, options)
+    // return sendTransaction(signed, connection)
+  }
 
-//   const marketState = await getMarketInfo(targetMarketId).catch((getMarketInfoError) => { console.log({ getMarketInfoError }); return null })
-//   if (!marketState) {
-//     return { Err: "market not found" }
-//   } 
-//   console.log(marketState)
-  
-//   // const addBaseAmount = new BN(2)
-//   // const addQuoteAmount = new BN(1)
-//   // const baseAmount = new BN(toBufferBE(BigInt(calcNonDecimalValue(input.baseMintAmount, baseMintState.decimals).toString()), 8))
-//   const bAmo = 10 //baseMintAmount
-//   const bDes = 9  //decimals
-//   const qAmo = 0.1 //quoteMintAmount
-//   const qDes = 9  //decimals
-//   const addBaseAmount = new BN(toBufferBE(BigInt(calcNonDecimalValue(bAmo, bDes).toString()), 8))
-//   const addQuoteAmount = new BN(toBufferBE(BigInt(calcNonDecimalValue(qAmo, qDes).toString()), 8))
 
-//   // const startTime = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7 // start from 7 days later
-//   // const startTime = Math.floor(Date.now() / 1000) - 4;
-//   const startTime = Math.floor(Date.now() / 1000);
+  export async function SendTx(
+    connection: web3.Connection,
+    // payer: Keypair | Signer,
+    txs: (web3.VersionedTransaction | web3.Transaction)[],
+    options?: SendOptions
+  ): Promise<string[]> {
+    const { signTransaction, sendTransaction } = useWallet();
+    if(!signTransaction){return ["signAllTransactions undefine"]}
+    
+    const txids: string[] = [];
+    // if(!signTransaction){return txids}
 
-//   if(!wallet){
-//     return {Err: "The wallet notfound"}
-//   }
-  
-//   const walletTokenAccounts = await getWalletTokenAccount(connection, wallet.publicKey)
-
-//   /* do something with start price if needed */
-//   console.log('pool price', new Decimal(addBaseAmount.toString()).div(new Decimal(10 ** baseToken.decimals)).div(new Decimal(addQuoteAmount.toString()).div(new Decimal(10 ** quoteToken.decimals))).toString())
-  
-//   const poolId = Liquidity.getAssociatedId({ marketId: targetMarketId, programId: PROGRAMIDS.AmmV4 })
-//   console.log("poolId: ",poolId.toBase58())
-
-//   ammCreatePool({
-//     startTime,
-//     addBaseAmount,
-//     addQuoteAmount,
-//     baseToken,
-//     quoteToken,
-//     targetMarketId,
-//     wallet,
-//     walletTokenAccounts,
-//   }).then(({ txids }) => {
-//     /** continue with txids */
-//     // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
-//     console.log('txids', txids)
-//   })
-
-// }
-// // howToUse();
+    for (const iTx of txs) {
+      if (iTx instanceof web3.VersionedTransaction) {
+        // iTx.sign([payer]);
+        // txids.push(await connection.sendTransaction(iTx, options));
+        // if(!signTransaction){return console.log("signAllTransactions undefine")}
+        signTransaction(iTx);
+        txids.push(await sendTransaction(iTx, connection, options));
+      } else {
+        // txids.push(await connection.sendTransaction(iTx, [payer], options));
+        txids.push(await sendTransaction(iTx, connection, options));
+      }
+    }
+    return txids;
+  }
