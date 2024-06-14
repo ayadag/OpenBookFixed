@@ -40,15 +40,15 @@ type Result<T, E = any> = {
 
 // import { ENV } from './constants';
 
-const ENV = {
-    PINATA_API_kEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
-    PINATA_DOMAIN : "https://",
-    PINATA_API_SECRET_KEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
-    IN_PRODUCTION : false,
-    COMPUTE_UNIT_PRICE : 1_800_000, // default: 200_000 
-    JITO_AUTH_KEYPAIR : getKeypairFromStr("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")!,
-    JITO_BLOCK_ENGINE_URL : "https://"
-}
+// const ENV = {
+//     PINATA_API_kEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+//     PINATA_DOMAIN : "https://",
+//     PINATA_API_SECRET_KEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+//     IN_PRODUCTION : false,
+//     COMPUTE_UNIT_PRICE : 1_800_000, // default: 200_000 
+//     JITO_AUTH_KEYPAIR : getKeypairFromStr("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")!,
+//     JITO_BLOCK_ENGINE_URL : "https://"
+// }
 
 // import { CreatePoolInput } from './types';
 // import {
@@ -88,6 +88,15 @@ export function sleep(ms: number) {
       return null
     }
   }
+  const ENV = {
+    PINATA_API_kEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+    PINATA_DOMAIN : "https://",
+    PINATA_API_SECRET_KEY : "43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT",
+    IN_PRODUCTION : false,
+    COMPUTE_UNIT_PRICE : 1_800_000, // default: 200_000 
+    JITO_AUTH_KEYPAIR : getKeypairFromStr("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")!,
+    JITO_BLOCK_ENGINE_URL : "https://"
+}
 
 export const CreatePool: FC = () => {
 
