@@ -3,11 +3,11 @@
 
 import { AmmCreatePool } from '../../../components/pool/AmmCreatePool';
 
-const Pool = () => {
+const Pool2 = () => {
     return(
         // <Layout>
             <AmmCreatePool/>
         // </Layout> 
     )
 }
-export default Pool;
+export default Pool2;

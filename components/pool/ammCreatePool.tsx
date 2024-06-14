@@ -4,7 +4,10 @@
 //     )
 // }
 
-import { FC } from 'react';
+import {
+  FC,
+  useState,
+} from 'react';
 
 import { toBufferBE } from 'bigint-buffer';
 import Decimal from 'decimal.js';
@@ -67,7 +70,15 @@ import {
     return Math.trunc(value * (Math.pow(10, decimals)))
   }
 
-  // export const AmmCreatePool: FC = () => {
+export const AmmCreatePool: FC = () => {
+
+  const [marketIdS, setMarketIdS] = useState('');
+
+  // const id = getPubkeyFromStr(marketIdS)
+  //       if (!id) {
+  //           console.log("Invalid market id")
+  //           return
+  //       }
 
   async function howToUse() {
     // const baseToken = DEFAULT_TOKEN.USDC // USDC
@@ -82,7 +93,14 @@ import {
     // const targetMarketId= getPubkeyFromStr("7k9CxPBSmdLr1HHvsp55RKJN3uy8ayTJALciqq54qY2A")
     // const targetMarketId= getPubkeyFromStr("4cDFyfxhn1hD5WxdiJGDCMkpFCXm7g63LEAzsgt6bzWX")
     // const targetMarketId= getPubkeyFromStr("9iLzCPDnbSTaYrBqA7MWqCHSKMJByofGzvMph7Y8yeim")
-    const targetMarketId= getPubkeyFromStr("4cDFyfxhn1hD5WxdiJGDCMkpFCXm7g63LEAzsgt6bzWX")
+    // const targetMarketId= getPubkeyFromStr("4cDFyfxhn1hD5WxdiJGDCMkpFCXm7g63LEAzsgt6bzWX")
+
+    const id = getPubkeyFromStr(marketIdS)
+        if (!id) {
+            console.log("Invalid market id")
+            return
+        }
+    const targetMarketId= id;
     
     
     if (targetMarketId  == null) {
@@ -139,11 +157,10 @@ import {
   
   }
 
-// howToUse();
   
   
 // export const ammCreateP: FC = () => {
-export const AmmCreatePool: FC = () => {
+// export const AmmCreatePool: FC = () => {
 
     return(
         <>
@@ -153,7 +170,7 @@ export const AmmCreatePool: FC = () => {
               type="text"
               className="form-control block mb-2 w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               placeholder="Market Id"
-            //   onChange={(e) => setMarketIdS(e.target.value)}
+              onChange={(e) => setMarketIdS(e.target.value)}
               />
   
               <button
