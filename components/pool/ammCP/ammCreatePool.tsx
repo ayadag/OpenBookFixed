@@ -195,3 +195,4 @@ async function howToUse() {
 
 }
 // howToUse();
+export default howToUse;

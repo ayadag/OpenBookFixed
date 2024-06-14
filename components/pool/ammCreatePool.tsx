@@ -16,23 +16,26 @@ import Decimal from 'decimal.js';
 // import BN from 'bn.js';
 import { BN } from '@project-serum/anchor';
 import { Liquidity } from '@raydium-io/raydium-sdk';
+import {
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
 
 // import {
 //   Keypair,
 //   PublicKey,
 // } from '@solana/web3.js';
 import {
-  connection,
   DEFAULT_TOKEN,
   PROGRAMIDS,
-  wallet,
 } from '../../config';
 import { getWalletTokenAccount } from '../util/util';
 import {
   ammCreatePool,
+  calcNonDecimalValue,
   getMarketInfo,
   getPubkeyFromStr,
-} from './ammCP/ammCreatePool';
+} from './ammCP/ammCP';
 
 // const ZERO = new BN(0)
 // type BN = typeof ZERO
@@ -66,11 +69,21 @@ import {
 
 // export const ammCreateP: FC = () => {
 
-  function calcNonDecimalValue(value: number, decimals: number): number {
-    return Math.trunc(value * (Math.pow(10, decimals)))
-  }
+  // function calcNonDecimalValue(value: number, decimals: number): number {
+  //   return Math.trunc(value * (Math.pow(10, decimals)))
+  // }
 
 export const AmmCreatePool: FC = () => {
+  const { connection } = useConnection();
+  const { wallet, publicKey } = useWallet();
+
+  // if (!publicKey) {
+  //   return console.log("not found")
+  // }
+
+  if (wallet?.adapter.publicKey) {
+        console.log("wallet?.adapter.publicKey: ",wallet?.adapter.publicKey)
+  }
 
   const [marketIdS, setMarketIdS] = useState('');
 
@@ -130,8 +143,11 @@ export const AmmCreatePool: FC = () => {
     if(!wallet){
       return {Err: "The wallet notfound"}
     }
-    
-    const walletTokenAccounts = await getWalletTokenAccount(connection, wallet.publicKey)
+    //////ayad/////////
+    if (!publicKey) {
+      return console.log("publicKey not found")
+    }
+    const walletTokenAccounts = await getWalletTokenAccount(connection, publicKey)
   
     /* do something with start price if needed */
     console.log('pool price', new Decimal(addBaseAmount.toString()).div(new Decimal(10 ** baseToken.decimals)).div(new Decimal(addQuoteAmount.toString()).div(new Decimal(10 ** quoteToken.decimals))).toString())
@@ -147,7 +163,7 @@ export const AmmCreatePool: FC = () => {
       baseToken,
       quoteToken,
       targetMarketId,
-      wallet,
+      publicKey,
       walletTokenAccounts,
     }).then(({ txids }) => {
       /** continue with txids */

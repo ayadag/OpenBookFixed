@@ -102,7 +102,11 @@ export const CreatePool: FC = () => {
 
     const { connection } = useConnection();
     const { wallet, publicKey } = useWallet();
-
+    
+    if (wallet?.adapter.publicKey) {
+        console.log("wallet?.adapter.publicKey: ",wallet?.adapter.publicKey)
+    }
+    
     const [marketIdS, setMarketIdS] = useState('')
 
     // const { publicKey, sendTransaction } = useWallet();
