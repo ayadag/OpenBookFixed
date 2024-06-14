@@ -1,8 +1,10 @@
+"use client";
 // import { toBufferBE } from 'bigint-buffer';
 // import Decimal from 'decimal.js';
 
 // import { BN } from 'bn.js';
 // import BN from 'bn.js';
+// import { FC } from 'react';
 import {
   BN,
   web3,
@@ -14,7 +16,7 @@ import {
   Market as RayMarket,
   Token,
 } from '@raydium-io/raydium-sdk';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletContextState } from '@solana/wallet-adapter-react';
 import {
   PublicKey,
   SendOptions,
@@ -91,11 +93,13 @@ export async function getMarketInfo(marketId: web3.PublicKey, connection: web3.C
 }
   
 
-export async function ammCreatePool(
+export async function AmmCP(
     input: TestTxInputInfo, 
     connection: web3.Connection, 
     // publicKey: web3.PublicKey,
     // signTransaction: <T extends web3.VersionedTransaction | web3.Transaction>,
+    signTransaction: WalletContextState["signTransaction"],
+    sendTransaction: WalletContextState["sendTransaction"],
 ): Promise<{ txids: string[] | void }> {
   // -------- step 1: make instructions --------
   const initPoolInstructionResponse = await Liquidity.makeCreatePoolV4InstructionV2Simple({
@@ -127,11 +131,24 @@ export async function ammCreatePool(
   
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions) }
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
-  return { txids: await BuildAndSendTx2(initPoolInstructionResponse.innerTransactions, connection, input.publicKey, { skipPreflight: true }) }
+  return { txids: await BuildAndSendTx2(
+    initPoolInstructionResponse.innerTransactions, 
+    connection, 
+    input.publicKey, 
+    signTransaction,
+    sendTransaction,
+    { skipPreflight: true }) }
 
 }
 
-export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Transaction[], connection: web3.Connection, publicKey: web3.PublicKey, options?: SendOptions) {
+export async function BuildAndSendTx2(
+    innerSimpleV0Transaction: InnerSimpleV0Transaction[], 
+    connection: web3.Connection, 
+    publicKey: web3.PublicKey, 
+    signTransaction: WalletContextState["signTransaction"],
+    sendTransaction: WalletContextState["sendTransaction"],
+    Options?: SendOptions
+) {
     // const { publicKey } = useWallet();
     // const { connection } = useConnection();
     if(!publicKey){return console.log("publicKey not found")}
@@ -147,7 +164,7 @@ export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Tra
     // if(!signAllTransactions){return console.log("signAllTransactions undefine")}
     // const signed = signAllTransactions(willSendTx)
   
-    return await SendTx(connection, willSendTx, options)
+    return await SendTx(connection, willSendTx, signTransaction, sendTransaction, Options)
     // return sendTransaction(signed, connection)
   }
 
@@ -156,9 +173,12 @@ export async function SendTx(
     connection: web3.Connection,
     // payer: Keypair | Signer,
     txs: (web3.VersionedTransaction | web3.Transaction)[],
-    options?: SendOptions
+    // sendTransaction: (transaction: web3.VersionedTransaction | web3.Transaction, connection: web3.Connection, options?: SendTransactionOptions | undefined) => Promise<...>,
+    signTransaction: WalletContextState["signTransaction"],
+    sendTransaction: WalletContextState["sendTransaction"],
+    Options?: SendOptions,
   ): Promise<string[]> {
-    const { signTransaction, sendTransaction } = useWallet();
+    // const { signTransaction, sendTransaction } = useWallet();
     if(!signTransaction){return ["signAllTransactions undefine"]}
     
     const txids: string[] = [];
@@ -170,10 +190,10 @@ export async function SendTx(
         // txids.push(await connection.sendTransaction(iTx, options));
         // if(!signTransaction){return console.log("signAllTransactions undefine")}
         signTransaction(iTx);
-        txids.push(await sendTransaction(iTx, connection, options));
+        txids.push(await sendTransaction(iTx, connection, Options));
       } else {
         // txids.push(await connection.sendTransaction(iTx, [payer], options));
-        txids.push(await sendTransaction(iTx, connection, options));
+        txids.push(await sendTransaction(iTx, connection, Options));
       }
     }
     return txids;

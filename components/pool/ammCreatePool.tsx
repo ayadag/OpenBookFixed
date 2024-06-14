@@ -31,7 +31,7 @@ import {
 } from '../../config';
 import { getWalletTokenAccount } from '../util/util';
 import {
-  ammCreatePool,
+  AmmCP,
   calcNonDecimalValue,
   getMarketInfo,
   getPubkeyFromStr,
@@ -75,17 +75,17 @@ import {
 
 export const AmmCreatePool: FC = () => {
   const { connection } = useConnection();
-  const { wallet, publicKey } = useWallet();
+  const { publicKey, signTransaction, sendTransaction } = useWallet();
 
   // if (!publicKey) {
   //   return console.log("not found")
   // }
 
-  if (wallet?.adapter.publicKey) {
-        console.log("wallet?.adapter.publicKey: ",wallet?.adapter.publicKey)
-        // console.log("Wallet.publickey: ", Wallet.publicKey)
-        console.log("publickey: ", publicKey)
-  }
+  // if (wallet?.adapter.publicKey) {
+  //       console.log("wallet?.adapter.publicKey: ",wallet?.adapter.publicKey)
+  //       // console.log("Wallet.publickey: ", Wallet.publicKey)
+  //       console.log("publickey: ", publicKey)
+  // }
 
   const [marketIdS, setMarketIdS] = useState('');
 
@@ -142,9 +142,9 @@ export const AmmCreatePool: FC = () => {
     // const startTime = Math.floor(Date.now() / 1000) - 4;
     const startTime = Math.floor(Date.now() / 1000);
   
-    if(!wallet){
-      return {Err: "The wallet notfound"}
-    }
+    // if(!wallet){
+    //   return {Err: "The wallet notfound"}
+    // }
     //////ayad/////////
     if (!publicKey) {
       return console.log("publicKey not found")
@@ -158,7 +158,7 @@ export const AmmCreatePool: FC = () => {
     console.log("poolId: ",poolId.toBase58())
   
     // ammCreatePool({
-    await ammCreatePool({
+    await AmmCP({
       startTime,
       addBaseAmount,
       addQuoteAmount,
@@ -167,7 +167,10 @@ export const AmmCreatePool: FC = () => {
       targetMarketId,
       publicKey,
       walletTokenAccounts,
-    }, connection).then(({ txids }) => {
+    }, 
+    connection,
+    signTransaction,
+    sendTransaction).then(({ txids }) => {
       /** continue with txids */
       // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
       console.log('txids', txids)
