@@ -83,6 +83,8 @@ export const AmmCreatePool: FC = () => {
 
   if (wallet?.adapter.publicKey) {
         console.log("wallet?.adapter.publicKey: ",wallet?.adapter.publicKey)
+        // console.log("Wallet.publickey: ", Wallet.publicKey)
+        console.log("publickey: ", publicKey)
   }
 
   const [marketIdS, setMarketIdS] = useState('');
@@ -120,7 +122,7 @@ export const AmmCreatePool: FC = () => {
       return { Err: " not found" }
     } 
   
-    const marketState = await getMarketInfo(targetMarketId).catch((getMarketInfoError) => { console.log({ getMarketInfoError }); return null })
+    const marketState = await getMarketInfo(targetMarketId, connection).catch((getMarketInfoError) => { console.log({ getMarketInfoError }); return null })
     if (!marketState) {
       return { Err: "market not found" }
     } 
@@ -165,7 +167,7 @@ export const AmmCreatePool: FC = () => {
       targetMarketId,
       publicKey,
       walletTokenAccounts,
-    }).then(({ txids }) => {
+    }, connection).then(({ txids }) => {
       /** continue with txids */
       // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
       console.log('txids', txids)

@@ -15,14 +15,13 @@ import {
 import { PublicKey } from '@solana/web3.js';
 
 import {
-  connection,
   makeTxVersion,
   PROGRAMIDS,
 } from '../../../config';
 import {
   buildAndSendTx,
   getWalletTokenAccount,
-} from '../../util/util';
+} from '../../util/utils';
 
 // const ZERO = new BN(0)
 // type BN = typeof ZERO
@@ -52,6 +51,7 @@ type TestTxInputInfo = LiquidityPairTargetInfo &
     walletTokenAccounts: WalletTokenAccounts
     // wallet: Keypair
     publicKey: PublicKey
+    // connection: web3.Connection
   }
 
 export function calcNonDecimalValue(value: number, decimals: number): number {
@@ -74,7 +74,7 @@ export function getPubkeyFromStr(str?: string) {
   }
 }
 
-export async function getMarketInfo(marketId: web3.PublicKey) {
+export async function getMarketInfo(marketId: web3.PublicKey, connection: web3.Connection) {
   const marketAccountInfo = await connection.getAccountInfo(marketId).catch(() => null)
   if (!marketAccountInfo) throw "Market not found"
 
@@ -87,7 +87,7 @@ export async function getMarketInfo(marketId: web3.PublicKey) {
 }
   
 
-export async function ammCreatePool(input: TestTxInputInfo): Promise<{ txids: string[] }> {
+export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Connection): Promise<{ txids: string[] }> {
   // -------- step 1: make instructions --------
   const initPoolInstructionResponse = await Liquidity.makeCreatePoolV4InstructionV2Simple({
     connection,
@@ -118,7 +118,7 @@ export async function ammCreatePool(input: TestTxInputInfo): Promise<{ txids: st
   
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions) }
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
-  return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
+  return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, connection, wallet, { skipPreflight: true }) }
 
 }
 
