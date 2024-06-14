@@ -14,10 +14,7 @@ import {
   Market as RayMarket,
   Token,
 } from '@raydium-io/raydium-sdk';
-import {
-  useConnection,
-  useWallet,
-} from '@solana/wallet-adapter-react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
   PublicKey,
   SendOptions,
@@ -94,7 +91,12 @@ export async function getMarketInfo(marketId: web3.PublicKey, connection: web3.C
 }
   
 
-export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Connection): Promise<{ txids: string[] | void }> {
+export async function ammCreatePool(
+    input: TestTxInputInfo, 
+    connection: web3.Connection, 
+    // publicKey: web3.PublicKey,
+    // signTransaction: <T extends web3.VersionedTransaction | web3.Transaction>,
+): Promise<{ txids: string[] | void }> {
   // -------- step 1: make instructions --------
   const initPoolInstructionResponse = await Liquidity.makeCreatePoolV4InstructionV2Simple({
     connection,
@@ -125,13 +127,13 @@ export async function ammCreatePool(input: TestTxInputInfo, connection: web3.Con
   
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions) }
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
-  return { txids: await BuildAndSendTx2(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
+  return { txids: await BuildAndSendTx2(initPoolInstructionResponse.innerTransactions, connection, input.publicKey, { skipPreflight: true }) }
 
 }
 
-export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Transaction[], options?: SendOptions) {
-    const { publicKey } = useWallet();
-    const { connection } = useConnection();
+export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Transaction[], connection: web3.Connection, publicKey: web3.PublicKey, options?: SendOptions) {
+    // const { publicKey } = useWallet();
+    // const { connection } = useConnection();
     if(!publicKey){return console.log("publicKey not found")}
 
     const willSendTx = await buildSimpleTransaction({
@@ -150,7 +152,7 @@ export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Tra
   }
 
 
-  export async function SendTx(
+export async function SendTx(
     connection: web3.Connection,
     // payer: Keypair | Signer,
     txs: (web3.VersionedTransaction | web3.Transaction)[],
@@ -175,4 +177,4 @@ export async function BuildAndSendTx2(innerSimpleV0Transaction: InnerSimpleV0Tra
       }
     }
     return txids;
-  }
+}
