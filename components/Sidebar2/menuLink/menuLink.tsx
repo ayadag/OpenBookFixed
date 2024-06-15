@@ -17,7 +17,7 @@ const MenuLink = ({item}: Item) => {
 
   // const pathname = usePathname()
   const router = useRouter();
-  console.log(router)
+  // console.log(router)
 
   // const goTo = ({link}) => {
   //   location.href = link
