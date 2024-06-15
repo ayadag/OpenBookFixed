@@ -10,7 +10,7 @@ type CreatePoolFormProps = {
   register: UseFormRegister<CreatePoolFormValues>;
   formState: FormState<CreatePoolFormValues>;
 };
-export default function ExistingMintForm({
+export default function CreatePoolForm({
   register,
   formState: { errors },
 }: CreatePoolFormProps) {
