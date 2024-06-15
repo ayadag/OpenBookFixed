@@ -21,7 +21,7 @@ const Pool = () => {
     const { register, handleSubmit, formState } =
     useForm<CreatePoolFormValues>();
 
-    const handleCreateMarket: SubmitHandler<CreatePoolFormValues> = async (
+    const handleCreatePool: SubmitHandler<CreatePoolFormValues> = async (
         data
       ) => {
         console.log("data", data)
@@ -39,7 +39,7 @@ const Pool = () => {
           </p>
 
         </div>
-        <form onSubmit={handleSubmit(handleCreateMarket)}>
+        <form onSubmit={handleSubmit(handleCreatePool)}>
           <div className="space-y-4">
 
 
