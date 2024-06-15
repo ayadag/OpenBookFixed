@@ -1,13 +1,12 @@
 "use client";
-// import Layout from '../../../components/layouts/layout';
-
+import Layout from '../../../components/layouts/layout';
 import { AmmCreatePool } from '../../../components/pool/AmmCreatePool';
 
 const Pool2 = () => {
     return(
-        // <Layout>
+        <Layout>
             <AmmCreatePool/>
-        // </Layout> 
+        </Layout> 
     )
 }
 export default Pool2;
