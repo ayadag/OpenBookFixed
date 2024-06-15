@@ -1,13 +1,12 @@
 "use client";
-// import Layout from '../../../components/layouts/layout';
-
-import { CreatePool } from '../../../components/pool/CreatePool';
+import CreatePool from '../../../components/createPool';
+import Layout from '../../../components/layouts/layout';
 
 const Pool = () => {
     return(
-        // <Layout>
+        <Layout>
             <CreatePool/>
-        // </Layout> 
+        </Layout> 
     )
 }
 export default Pool;
