@@ -1,6 +1,23 @@
+import {
+  ReactNode,
+  useEffect,
+} from 'react';
+
+import BN from 'bn.js';
+import { useRouter } from 'next/router';
+import {
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { toast } from 'react-toastify';
+import ReactTooltip from 'react-tooltip';
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { RadioGroup } from "@headlessui/react";
-import { DexInstructions, Market } from "@project-serum/serum";
+import { RadioGroup } from '@headlessui/react';
+import {
+  DexInstructions,
+  Market,
+} from '@project-serum/serum';
 import {
   ACCOUNT_SIZE,
   createInitializeAccountInstruction,
@@ -9,44 +26,47 @@ import {
   getMint,
   MINT_SIZE,
   TOKEN_PROGRAM_ID,
-} from "@solana/spl-token-2";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+} from '@solana/spl-token-2';
 import {
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
+import {
+  ComputeBudgetProgram,
   Keypair,
   PublicKey,
   SystemProgram,
   Transaction,
   TransactionInstruction,
-  ComputeBudgetProgram,
-} from "@solana/web3.js";
-import BN from "bn.js";
-import ReactTooltip from "react-tooltip";
-import { useRouter } from "next/router";
-import { ReactNode, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import TransactionToast from "../../../components/common/Toasts/TransactionToast";
-import AdvancedOptionsForm from "../../../components/createMarket/AdvancedOptionsForm";
-import CreateMintOption from "../../../components/createMarket/CreateMintOption";
-import ExistingMintForm from "../../../components/createMarket/ExistingMintForm";
-import NewMintForm from "../../../components/createMarket/NewMintForm";
-import TickerForm from "../../../components/createMarket/TickerForm";
-import { getHeaderLayout } from "../../../components/layouts/HeaderLayout";
-import { useSerum } from "../../../context";
-import { tokenAtomicsToPrettyDecimal } from "../../../utils/numerical";
+} from '@solana/web3.js';
+
+import TransactionToast
+  from '../../../components/common/Toasts/TransactionToast';
+import AdvancedOptionsForm
+  from '../../../components/createMarket/AdvancedOptionsForm';
+import CreateMintOption
+  from '../../../components/createMarket/CreateMintOption';
+import ExistingMintForm
+  from '../../../components/createMarket/ExistingMintForm';
+import NewMintForm from '../../../components/createMarket/NewMintForm';
+import TickerForm from '../../../components/createMarket/TickerForm';
+import { getHeaderLayout } from '../../../components/layouts/HeaderLayout';
+import { useSerum } from '../../../context';
+import useRentExemption from '../../../hooks/useRentExemption';
+import useSerumMarketAccountSizes
+  from '../../../hooks/useSerumMarketAccountSizes';
+import { tokenAtomicsToPrettyDecimal } from '../../../utils/numerical';
 import {
   EVENT_QUEUE_LENGTH,
   getVaultOwnerAndNonce,
   ORDERBOOK_LENGTH,
   REQUEST_QUEUE_LENGTH,
-} from "../../../utils/serum";
+} from '../../../utils/serum';
 import {
   sendSignedTransaction,
   signTransactions,
   TransactionWithSigners,
-} from "../../../utils/transaction";
-import useSerumMarketAccountSizes from "../../../hooks/useSerumMarketAccountSizes";
-import useRentExemption from "../../../hooks/useRentExemption";
+} from '../../../utils/transaction';
 
 const TRANSACTION_MESSAGES = [
   {
@@ -537,7 +557,7 @@ const CreateMarket = () => {
         <div>
           <h1 className="text-2xl text-slate-200">Create Market</h1>
           <p className="text-sm text-slate-400">
-            You must set a custom RPC endpoint to create a market. There is no development fee's therefore I am not 
+            You must set a custom RPC endpoint to create a market. There is no development fees therefore I am not 
             providing a base RPC endpoint. You can set a custom RPC endpoint by clicking the settings icon and pasting the URL there.
           </p>
 
