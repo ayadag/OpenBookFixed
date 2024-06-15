@@ -40,7 +40,7 @@ export default function CreatePoolForm({
         <label className="block text-xs text-slate-400">Base Amount</label>
         <div className="mt-1">
           <input
-            type="text"
+            type="number"
             className="block w-full rounded-md p-2 bg-slate-700 focus-style sm:text-sm"
             {...register("baseAmount", {
               required: true,
@@ -59,7 +59,7 @@ export default function CreatePoolForm({
         <label className="block text-xs text-slate-400">Quote Amount</label>
         <div className="mt-1">
           <input
-            type="text"
+            type="number"
             className="block w-full rounded-md p-2 bg-slate-700 focus-style sm:text-sm"
             {...register("qouteAmount", {
               required: true,
