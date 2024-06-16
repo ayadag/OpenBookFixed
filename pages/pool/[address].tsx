@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import { web3 } from '@project-serum/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
@@ -14,18 +15,25 @@ import { VaultDisplay } from '../../components/market/Vault';
 import { useSolana } from '../../context';
 import { MarketProvider } from '../../context/market';
 import { useSerumMarket } from '../../hooks/useSerumMarket';
+import { formatAmmKeysById } from '../../utils/formatAmmKeysById';
 
-const MarketPage = () => {
+async function PoolPage() {
   const router = useRouter();
   const wallet = useWallet();
   const { address } = router.query;  //pool address
 
   const { cluster } = useSolana();
 
+  const targetPoolInfo = await formatAmmKeysById(address as string)
+  if(!targetPoolInfo){
+    toast.error("cannot find the target pool")
+  }
+  //targetPoolInfo.marketId   //market id
+
   // TODO: handle loading
   // const [pageLoading, setPageLoading] = useState(true);
 
-  const { serumMarket } = useSerumMarket(address as string);
+  const { serumMarket } = useSerumMarket(targetPoolInfo.marketId);
 
   if (!serumMarket) return <p>loading...</p>;
 
@@ -40,8 +48,8 @@ const MarketPage = () => {
       </div>
     </MarketProvider>
   );
-};
+}
 
-MarketPage.getLayout = (page: ReactNode) => getSearchLayout(page, "Market");
+PoolPage.getLayout = (page: ReactNode) => getSearchLayout(page, "Pool");
 
-export default MarketPage;
+export default PoolPage;
