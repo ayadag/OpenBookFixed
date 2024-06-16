@@ -233,23 +233,28 @@ const Pool = () => {
         const poolId = Liquidity.getAssociatedId({ marketId: targetMarketId, programId: PROGRAMIDS.AmmV4 })
         console.log("poolId: ", poolId.toBase58())
 
-        await AmmCP({
-            startTime,
-            addBaseAmount,
-            addQuoteAmount,
-            baseToken,
-            quoteToken,
-            targetMarketId,
-            publicKey,
-            walletTokenAccounts,
-        },
-            connection,
-            signTransaction,
-            sendTransaction).then(({ txids }) => {
-                /** continue with txids */
-                // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
-                console.log('txids', txids)
+        try {
+            await AmmCP({
+                startTime,
+                addBaseAmount,
+                addQuoteAmount,
+                baseToken,
+                quoteToken,
+                targetMarketId,
+                publicKey,
+                walletTokenAccounts,
+                },
+                connection,
+                signTransaction,
+                sendTransaction).then(({ txids }) => {
+                    /** continue with txids */
+                    // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
+                    console.log('txids', txids)
             })
+        } catch (e) {
+            console.error("[explorer]: ", e);
+            toast.error("Failed to create Pool.");
+        }        
 
     }
 

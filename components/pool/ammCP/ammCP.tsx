@@ -131,13 +131,20 @@ export async function AmmCP(
   
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions) }
   // return { txids: await buildAndSendTx(initPoolInstructionResponse.innerTransactions, { skipPreflight: true }) }
+
+  // try {
   return { txids: await BuildAndSendTx2(
     initPoolInstructionResponse.innerTransactions, 
     connection, 
     input.publicKey, 
     signTransaction,
     sendTransaction,
-    { skipPreflight: true }) }
+    { skipPreflight: true }) 
+   }
+  // } catch(error){
+    // console.log(error)
+  // }
+
 
 }
 
