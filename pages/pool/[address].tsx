@@ -31,6 +31,8 @@ const PoolPage = () => {
   // const [targetPoolInfo, setTargetPoolInfo] = useState<ApiPoolInfoV4>();
   const { connection } = useConnection();
   const [marketId, setMarketId] = useState<web3.PublicKey>();
+  // const [poolId, setPooltId] = useState<web3.PublicKey>();
+  const [poolId, setPooltId] = useState<web3.PublicKey>(new web3.PublicKey("4pRDbmvCTAc8gmf3EUbvWT3DRtEF5ceLBB5fraBMqa1W"));
 
   const router = useRouter();
   const wallet = useWallet();
@@ -39,8 +41,16 @@ const PoolPage = () => {
   const { cluster } = useSolana();
 
   const poolAS = address as string;
-  const poolAP = new web3.PublicKey(poolAS);
+  console.log("poolAS", poolAS)
 
+  // if(!poolAS){return}
+  // const poolAP = new web3.PublicKey(poolAS);
+  // const poolAP = new web3.PublicKey("4pRDbmvCTAc8gmf3EUbvWT3DRtEF5ceLBB5fraBMqa1W");
+
+  // setPooltId(new web3.PublicKey(address as string))
+  // if(poolAS){setPooltId(new web3.PublicKey(poolAS))}
+
+  
   // try{
   //   const targetPoolInfo = await formatAmmKeysById(poolAS)
   // } catch (e) {return e;}
@@ -74,12 +84,13 @@ const PoolPage = () => {
   
   //targetPoolInfo.marketId   //market id
 
+  
   useEffect( () => { 
     async function fetchData() {
         try {
             // const res = await formatAmmKeysById(poolAS); 
-
-            const res = await connection.getAccountInfo(new web3.PublicKey(poolAS))
+            setPooltId(new web3.PublicKey(address as string))
+            const res = await connection.getAccountInfo(new web3.PublicKey(address as string))
             if (res === null) throw Error(' get id info error ')
             const info = LIQUIDITY_STATE_LAYOUT_V4.decode(res.data)
   
@@ -92,12 +103,13 @@ const PoolPage = () => {
         }
     }
     fetchData();
-  }, [poolAS, connection]);
+  }, [address, connection]);
 
   // TODO: handle loading
   // const [pageLoading, setPageLoading] = useState(true);
 
   const { serumMarket } = useSerumMarket(marketId?.toString());
+  // const { serumMarket } = useSerumMarket(address as string);
 
   if (!serumMarket) return <p>loading...</p>;
 
@@ -105,7 +117,7 @@ const PoolPage = () => {
     <MarketProvider serumMarket={serumMarket} walletAddress={wallet.publicKey}>
       <div className="flex flex-col items-stretch space-y-4">
         <TokenDisplay />
-        <OverviewTable2 poolAddress={poolAP}/>
+        <OverviewTable2 poolAddress={poolId}/>
         <VaultDisplay />
         <EventQueueCard />
         {cluster.network !== "mainnet-beta" && <ActionCenter />}
