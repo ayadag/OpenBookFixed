@@ -8,6 +8,10 @@ type TransactionSuccessProps = {
   txSig: string;
   message: string;
 };
+type TransactionSuccessProps2 = {
+  txSig2: void | string[];
+  message: string;
+};
 
 export default function TransactionToast({
   txSig,
@@ -29,13 +33,9 @@ export default function TransactionToast({
   );
 }
 
-type TransactionSuccessProps2 = {
-  txSig: void | string[];
-  message: string;
-};
 
 export function TransactionToast2({
-  txSig,
+  txSig2,
   message,
 }: TransactionSuccessProps2) {
   const { cluster } = useSolana();
@@ -43,7 +43,7 @@ export function TransactionToast2({
     <div className="flex flex-col space-y-1">
       <p>{message}</p>
       <a
-        href={getExplorerLink2(txSig, cluster.network)}
+        href={getExplorerLink2(txSig2, cluster.network)}
         target="_blank"
         rel="noopener noreferrer"
         className="italic font-light text-sm"

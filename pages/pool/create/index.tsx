@@ -29,8 +29,9 @@ import {
   useWallet,
 } from '@solana/wallet-adapter-react';
 
-import TransactionToast2
-  from '../../../components/common/Toasts/TransactionToast';
+import {
+  TransactionToast2,
+} from '../../../components/common/Toasts/TransactionToast';
 import CreatePoolForm from '../../../components/createPool/CreatePoolForm';
 import Layout from '../../../components/layouts/layout';
 import {
@@ -255,7 +256,7 @@ const Pool = () => {
                     toast(
                         () => (
                           <TransactionToast2
-                            txSig={txids}
+                            txSig2={txids}
                             message="Created pool successfully"
                           />
                         )

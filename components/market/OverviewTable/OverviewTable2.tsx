@@ -10,8 +10,9 @@ import {
   DataTableRow,
 } from '../../common/DataTable';
 
-export const OverviewTable2 = (poolAddress: web3.PublicKey) => {
-  const { cluster } = useSolana();
+// export const OverviewTable2 = (poolAddress: web3.PublicKey) => {
+  export const OverviewTable2 = (props: {poolAddress: web3.PublicKey}) => {
+    const { cluster } = useSolana();
   const { serumMarket } = useMarket();
   const { eventQueueLength, requestQueueLength, bidsLength, asksLength } =
     useSerumMarketAccountLengths({
@@ -34,8 +35,8 @@ export const OverviewTable2 = (poolAddress: web3.PublicKey) => {
         {/* //Pool Address component */}
         <DataTableRow
           label="Pool Address"
-          value={poolAddress.toString()}
-          link={getExplorerAccountLink(poolAddress, cluster.network)}
+          value={props.poolAddress.toString()}
+          link={getExplorerAccountLink(props.poolAddress, cluster.network)}
         />
         <DataTableRow
           label="Market Address"

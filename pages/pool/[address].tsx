@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { web3 } from '@project-serum/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
 
 import { getSearchLayout } from '../../components/layouts/SearchLayout';
@@ -17,7 +18,7 @@ import { useSerumMarket } from '../../hooks/useSerumMarket';
 const MarketPage = () => {
   const router = useRouter();
   const wallet = useWallet();
-  const { address } = router.query;
+  const { address } = router.query;  //pool address
 
   const { cluster } = useSolana();
 
@@ -32,7 +33,7 @@ const MarketPage = () => {
     <MarketProvider serumMarket={serumMarket} walletAddress={wallet.publicKey}>
       <div className="flex flex-col items-stretch space-y-4">
         <TokenDisplay />
-        <OverviewTable2 {...PublicKey: new web3.PublicKey("jscxe")}/>
+        <OverviewTable2 poolAddress={new web3.PublicKey(address as string)}/>
         <VaultDisplay />
         <EventQueueCard />
         {cluster.network !== "mainnet-beta" && <ActionCenter />}
