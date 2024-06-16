@@ -5,6 +5,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 
 import {
@@ -99,8 +100,8 @@ const Pool = () => {
     ) => {
         console.log("data", data)
         if (!publicKey) {
-            console.log("wallet not connected")
-            return
+            toast.error("Wallet not connected");
+            return;
         }
 
         const id = getPubkeyFromStr(data.marketId)  //F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd
