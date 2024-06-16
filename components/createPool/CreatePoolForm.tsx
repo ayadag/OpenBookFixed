@@ -18,7 +18,7 @@ export default function CreatePoolForm({
     <div className="space-y-2">
       <div>
 
-      <label className="block text-xs text-slate-400">Market Id</label>
+      <label className="block text-xs text-slate-400">Market Address</label>
         <div className="mt-1">
           <input
             type="text"

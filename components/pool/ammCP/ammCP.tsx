@@ -139,7 +139,8 @@ export async function AmmCP(
     input.publicKey, 
     signTransaction,
     sendTransaction,
-    { skipPreflight: true }) 
+    // { skipPreflight: true }) 
+    { skipPreflight: false }) 
    }
   // } catch(error){
     // console.log(error)

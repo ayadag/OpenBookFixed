@@ -29,6 +29,8 @@ import {
   useWallet,
 } from '@solana/wallet-adapter-react';
 
+import TransactionToast2
+  from '../../../components/common/Toasts/TransactionToast';
 import CreatePoolForm from '../../../components/createPool/CreatePoolForm';
 import Layout from '../../../components/layouts/layout';
 import {
@@ -250,6 +252,14 @@ const Pool = () => {
                     /** continue with txids */
                     // const poolId = Liquidity.getAssociatedId({ marketId: marketInfo.marketId, programId: ammProgramId })
                     console.log('txids', txids)
+                    toast(
+                        () => (
+                          <TransactionToast2
+                            txSig={txids}
+                            message="Created pool successfully"
+                          />
+                        )
+                    )
             })
         } catch (e) {
             console.error("[explorer]: ", e);
