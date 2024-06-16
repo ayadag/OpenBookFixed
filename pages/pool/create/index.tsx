@@ -55,10 +55,10 @@ const Pool = () => {
     const ammProgramId = new web3.PublicKey("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8");
     // let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
 
-    if (!publicKey) {
-        console.log("wallet not connected")
-        return
-    }
+    // if (!publicKey) {
+    //     console.log("wallet not connected")
+    //     return
+    // }
 
     // function addPoolKeys(poolInfo: LiquidityAssociatedPoolKeys, marketState: any) {
     //     const { authority, baseDecimals, baseMint, baseVault, id, lookupTableAccount, lpDecimals, lpMint, lpVault, marketAuthority, marketId, marketProgramId, marketVersion, openOrders, programId, quoteDecimals, quoteMint, quoteVault, targetOrders, version, withdrawQueue, } = poolInfo
@@ -98,6 +98,10 @@ const Pool = () => {
         data
     ) => {
         console.log("data", data)
+        if (!publicKey) {
+            console.log("wallet not connected")
+            return
+        }
 
         const id = getPubkeyFromStr(data.marketId)  //F6Abrndt3sWNreVesrb6nzqNiPfCpeY6qesTzPPbyqyd
         if (!id) {
