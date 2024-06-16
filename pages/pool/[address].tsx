@@ -5,8 +5,8 @@ import {
 } from 'react';
 
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 
+// import { toast } from 'react-toastify';
 import { web3 } from '@project-serum/anchor';
 import { LIQUIDITY_STATE_LAYOUT_V4 } from '@raydium-io/raydium-sdk';
 import {
@@ -32,7 +32,7 @@ const PoolPage = () => {
   const { connection } = useConnection();
   const [marketId, setMarketId] = useState<web3.PublicKey>();
   // const [poolId, setPooltId] = useState<web3.PublicKey>();
-  const [poolId, setPooltId] = useState<web3.PublicKey>(new web3.PublicKey("4pRDbmvCTAc8gmf3EUbvWT3DRtEF5ceLBB5fraBMqa1W"));
+  const [poolId, setPooltId] = useState<web3.PublicKey>(new web3.PublicKey("4pRDbmvCTAc8gmf3EUbvWT3DRtEF5ceLBB5fraBMqa1W"));  //initial value 4pRDbmvCTAc8gmf3EUbvWT3DRtEF5ceLBB5fraBMqa1W
 
   const router = useRouter();
   const wallet = useWallet();
@@ -98,7 +98,7 @@ const PoolPage = () => {
 
             setMarketId(marketId);
         } catch (err) {
-          toast.error("cannot find the target pool")
+          // toast.error("cannot find the target pool")
           console.log(err);
         }
     }

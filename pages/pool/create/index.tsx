@@ -1,6 +1,7 @@
 "use client";
 import { toBufferBE } from 'bigint-buffer';
 import Decimal from 'decimal.js';
+import { useRouter } from 'next/router';
 import {
   SubmitHandler,
   useForm,
@@ -49,13 +50,13 @@ export type CreatePoolFormValues = {
     qouteAmount: number;
 }
 
-
 const Pool = () => {
     // const { register, handleSubmit, watch, setValue, formState, clearErrors } =
     const { register, handleSubmit, formState } =
         useForm<CreatePoolFormValues>();
     const { connection } = useConnection();
     const { publicKey, signTransaction, sendTransaction } = useWallet();
+    const router = useRouter();
     const ammProgramId = new web3.PublicKey("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8");
     // let cachedPoolKeys: Map<string, LiquidityPoolKeys>;
 
@@ -261,6 +262,10 @@ const Pool = () => {
                           />
                         )
                     )
+                    router.push({
+                        pathname: `${poolId.toBase58()}`,
+                        query: router.query,
+                      });
             })
         } catch (e) {
             console.error("[explorer]: ", e);
