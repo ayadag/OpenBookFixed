@@ -41,7 +41,7 @@ export default function CreatePoolForm({
         <div className="mt-1">
           <input
             type="number"
-            step="0.001"
+            step="0.0000000001"
             className="block w-full rounded-md p-2 bg-slate-700 focus-style sm:text-sm"
             {...register("baseAmount", {
               required: true,
@@ -61,7 +61,7 @@ export default function CreatePoolForm({
         <div className="mt-1">
           <input
             type="number"
-            step="0.001"
+            step="0.0000000001"
             className="block w-full rounded-md p-2 bg-slate-700 focus-style sm:text-sm"
             {...register("qouteAmount", {
               required: true,
