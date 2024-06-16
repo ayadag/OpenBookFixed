@@ -1,16 +1,18 @@
-import { useRouter } from "next/router";
-import { ReactNode } from "react";
-import { useSerumMarket } from "../../hooks/useSerumMarket";
+import { ReactNode } from 'react';
 
-import { EventQueueCard } from "../../components/market/EventQueue";
-import { MarketProvider } from "../../context/market";
-import { TokenDisplay } from "../../components/market/TokenDisplay";
-import { OverviewTable } from "../../components/market/OverviewTable";
-import { VaultDisplay } from "../../components/market/Vault";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { ActionCenter } from "../../components/market/ActionCenter";
-import { useSolana } from "../../context";
-import { getSearchLayout } from "../../components/layouts/SearchLayout";
+import { useRouter } from 'next/router';
+
+import { useWallet } from '@solana/wallet-adapter-react';
+
+import { getSearchLayout } from '../../components/layouts/SearchLayout';
+import { ActionCenter } from '../../components/market/ActionCenter';
+import { EventQueueCard } from '../../components/market/EventQueue';
+import { OverviewTable } from '../../components/market/OverviewTable';
+import { TokenDisplay } from '../../components/market/TokenDisplay';
+import { VaultDisplay } from '../../components/market/Vault';
+import { useSolana } from '../../context';
+import { MarketProvider } from '../../context/market';
+import { useSerumMarket } from '../../hooks/useSerumMarket';
 
 const MarketPage = () => {
   const router = useRouter();

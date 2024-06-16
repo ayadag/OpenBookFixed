@@ -12,7 +12,8 @@ import {
 
 // export const OverviewTable2 = (poolAddress: web3.PublicKey) => {
   export const OverviewTable2 = (props: {poolAddress: web3.PublicKey}) => {
-    const { cluster } = useSolana();
+// export const OverviewTable2 = props: any => {
+  const { cluster } = useSolana();
   const { serumMarket } = useMarket();
   const { eventQueueLength, requestQueueLength, bidsLength, asksLength } =
     useSerumMarketAccountLengths({
@@ -22,7 +23,7 @@ import {
       asksAddress: serumMarket?.decoded.asks,
     });
 
-  if (!serumMarket) {
+  if (!serumMarket || !props) {
     return null;
   }
 
