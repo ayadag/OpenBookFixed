@@ -16,11 +16,20 @@ import {
   DownOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { useWallet } from '@solana/wallet-adapter-react';
+import {
+  Connection,
+  VersionedTransaction,
+} from '@solana/web3.js';
 
 import styles from './swap2.module.css';
 import tokenList from './tokenList.json';
 
 function Swap() {
+    const wallet = useWallet();
+    // const connection = useConnection();
+    const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
+
     const [slippage, setSlippage] = useState(2.5);
     // const [tokenOneAmount, setTokenOneAmount] = useState(null);
     // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
@@ -130,9 +139,58 @@ function Swap() {
         //   fetchPrices(tokenOne.address, tokenList[i].address)
         }
         setIsOpen(false);
-      }
-    
+    }
 
+    async function signAndSendTransaction() {
+        if (!wallet.connected || !wallet.signTransaction) {
+          console.error(
+            'Wallet is not connected or does not support signing transactions'
+          );
+          return;
+        }
+    
+        // get serialized transactions for the swap
+        const { swapTransaction } = await (
+          await fetch('https://quote-api.jup.ag/v6/swap', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              quoteResponse,
+              userPublicKey: wallet.publicKey?.toString(),
+              wrapAndUnwrapSol: true,
+              // feeAccount is optional. Use if you want to charge a fee.  feeBps must have been passed in /quote API.
+              // feeAccount: "fee_account_public_key"
+            }),
+          })
+        ).json();
+    
+        try {
+          const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
+          const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
+          const signedTransaction = await wallet.signTransaction(transaction);
+    
+          const rawTransaction = signedTransaction.serialize();
+          const txid = await connection.sendRawTransaction(rawTransaction, {
+            skipPreflight: true,
+            maxRetries: 2,
+          });
+    
+          const latestBlockHash = await connection.getLatestBlockhash();
+          await connection.confirmTransaction({
+            blockhash: latestBlockHash.blockhash,
+            lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+            signature: txid
+          }, 'confirmed');
+          
+          console.log(`https://solscan.io/tx/${txid}`);
+    
+        } catch (error) {
+          console.error('Error signing or sending the transaction:', error);
+        }
+    }
+    
     const settings = (
         <>
           <div>Slippage Tolerance</div>
@@ -210,7 +268,7 @@ function Swap() {
                         </div>
                     </div>
                     {/* <div className={styles.swapButton} disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div> */}
-                    <button className={styles.swapButton} disabled={!tokenOneAmount || tokenOneAmount==0}>Swap</button>
+                    <button className={styles.swapButton} disabled={!tokenOneAmount || tokenOneAmount==0 || !wallet.publicKey} onClick={signAndSendTransaction}>{!wallet.publicKey ? "Connect wallet" : "Swap"}</button>
                 </div>
             </div>
         </div>
