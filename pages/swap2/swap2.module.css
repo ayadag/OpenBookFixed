@@ -92,6 +92,7 @@
     align-items: flex-start;
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 20px;
   }
   
   
@@ -100,6 +101,7 @@
     justify-content: space-between;
     align-items: center;
     width: 98%;
+    padding-bottom: 5px;
   }
   
   .cog {
@@ -122,6 +124,7 @@
     display: flex;
     border-radius: 8px;
     position: absolute;
+    /* position:fixed; */
     top: 86px;
     /* left: 180px; */
     left: 160px;
