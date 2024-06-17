@@ -71,7 +71,7 @@ function Swap() {
         };
     };
 
-    const debounceQuoteCall = useCallback(debounce(getQuote, 500), []);
+    const debounceQuoteCall = useCallback(debounce(getQuote, 500), [tokenOne, tokenTwo]);
 
     useEffect(() => {
         debounceQuoteCall(tokenOneAmount);
@@ -104,8 +104,8 @@ function Swap() {
 
     function switchTokens() {
         // setPrices(null);
-        // setTokenOneAmount(null);
-        // setTokenTwoAmount(null);
+        setTokenOneAmount(0);
+        setTokenTwoAmount(0);
         const one = tokenOne;
         const two = tokenTwo;
         setTokenOne(two);
