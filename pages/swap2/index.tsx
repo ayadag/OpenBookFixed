@@ -37,22 +37,22 @@ function Swap() {
         setSlippage(e.target.value);
     }
 
-    // function changeAmount(e: any) {
-    //     setTokenOneAmount(e.target.value);
-    //     // if(e.target.value && prices){
-    //     //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-    //     // }else{
-    //     // //   setTokenTwoAmount(null);
-    //     // setTokenTwoAmount(0);
-    //     // }
-    // }
+    function changeAmount(e: any) {
+        setTokenOneAmount(e.target.value);
+        // if(e.target.value && prices){
+        //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
+        // }else{
+        // //   setTokenTwoAmount(null);
+        // setTokenTwoAmount(0);
+        // }
+    }
 
     ////////////ayad///////////
-    const handleFromValueChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-        ) => {
-        setTokenOneAmount(Number(event.target.value));
-    };
+    // const handleFromValueChange = (
+    //     event: React.ChangeEvent<HTMLInputElement>
+    //     ) => {
+    //     setTokenOneAmount(Number(event.target.value));
+    // };
 
     const debounce = <T extends unknown[]>(
         func: (...args: T) => void,
@@ -188,8 +188,8 @@ function Swap() {
                         <Input
                             placeholder="0"
                             value={tokenOneAmount}
-                            // onChange={changeAmount}
-                            onChange={handleFromValueChange}
+                            onChange={changeAmount}
+                            // onChange={handleFromValueChange}
                             // disabled={!prices}
                         />
                         <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
