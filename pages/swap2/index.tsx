@@ -6,6 +6,7 @@ import React, {
 
 import {
   Input,
+  message,
   Modal,
   Popover,
   Radio,
@@ -29,6 +30,7 @@ function Swap() {
     const wallet = useWallet();
     // const connection = useConnection();
     const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
+    const [messageApi, contextHolder] = message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
     // const [tokenOneAmount, setTokenOneAmount] = useState(null);
@@ -167,6 +169,14 @@ function Swap() {
         ).json();
     
         try {
+            //sending transaction
+            messageApi.destroy();
+            messageApi.open({
+                type: 'loading',
+                content: 'Transaction is Pending...',
+                duration: 0,
+            })
+            
           const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
           const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
           const signedTransaction = await wallet.signTransaction(transaction);
@@ -184,10 +194,25 @@ function Swap() {
             signature: txid
           }, 'confirmed');
           
+          //Transaction Successful
+          messageApi.destroy();
+          messageApi.open({
+          type: 'success',
+          content: 'Transaction Successful',
+          duration: 2.5,
+          })
+          
           console.log(`https://solscan.io/tx/${txid}`);
     
         } catch (error) {
-          console.error('Error signing or sending the transaction:', error);
+            //Transaction Failed
+            messageApi.destroy();
+            messageApi.open({
+                type: 'error',
+                content: 'Transaction Failed',
+                duration: 2.50,
+              })
+            console.error('Error signing or sending the transaction:', error);
         }
     }
     
@@ -206,6 +231,7 @@ function Swap() {
     return (
         <div className={styles.App}>
             <div className={styles.mainWindow}>
+                {contextHolder}
                 <Modal
                     open={isOpen}
                     footer={null}
