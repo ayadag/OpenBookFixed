@@ -120,8 +120,8 @@ function Swap() {
 
     function modifyToken(i: any){
         // setPrices(null);
-        // setTokenOneAmount(null);
-        // setTokenTwoAmount(null);
+        setTokenOneAmount(0);
+        setTokenTwoAmount(0);
         if (changeToken === 1) {
           setTokenOne(tokenList[i]);
         //   fetchPrices(tokenList[i].address, tokenTwo.address)
