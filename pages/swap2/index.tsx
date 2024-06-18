@@ -29,7 +29,8 @@ import tokenList from './tokenList.json';
 function Swap() {
     const wallet = useWallet();
     // const connection = useConnection();
-    const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
+    // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
+    const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
     const [messageApi, contextHolder] = message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
