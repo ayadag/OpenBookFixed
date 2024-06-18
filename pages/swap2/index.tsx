@@ -43,6 +43,9 @@ function Swap() {
     const [changeToken, setChangeToken] = useState(1);
     const [quoteResponse, setQuoteResponse] = useState(null);
     // const [prices, setPrices] = useState(null);
+    ///////////ayad//////////
+    const [tokenOneN, setTokenOneN] = useState(0);
+    const [tokenTwoN, setTokenTwoN] = useState(1);
 
     function handleSlippageChange(e: any) {
         setSlippage(e.target.value);
@@ -134,10 +137,26 @@ function Swap() {
         setTokenOneAmount(0);
         setTokenTwoAmount(0);
         if (changeToken === 1) {
-          setTokenOne(tokenList[i]);
+            /////ayad/////
+            if(tokenTwoN == i){
+                setTokenTwo(tokenOne);
+                // tokenTwoN = tokenOneN;
+                setTokenTwoN(tokenOneN);
+            }
+            
+            setTokenOne(tokenList[i]);
+            setTokenOneN(i);
         //   fetchPrices(tokenList[i].address, tokenTwo.address)
         } else {
-          setTokenTwo(tokenList[i]);
+            ////ayad//////
+            if(tokenOneN == i) {
+                setTokenOne(tokenTwo);
+                //tokenOneN = tokenTwoN;
+                setTokenOneN(tokenTwoN);
+            }
+            
+            setTokenTwo(tokenList[i]);
+            setTokenTwoN(i);
         //   fetchPrices(tokenOne.address, tokenList[i].address)
         }
         setIsOpen(false);
@@ -276,7 +295,10 @@ function Swap() {
                             // onChange={handleFromValueChange}
                             // disabled={!prices}
                         />
-                        <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
+                        <Input placeholder="0" 
+                        value={tokenOneAmount==0 ? 0 : tokenTwoAmount} 
+                        disabled={true} 
+                        />
                         <div className={styles.switchButton} onClick={switchTokens}>
                             <ArrowDownOutlined className={styles.switchArrow} />
                         </div>
